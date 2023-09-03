@@ -389,12 +389,7 @@ public class Form_Empleado extends javax.swing.JFrame {
     private void Nuevo() {
         try {
             Empleado_Bens cb = new Empleado_Bens();
-            this.txt_id_empleado.setText("" + cb.Incremento_Empleado());
-            this.txt_nombres.setText("");
-            this.txt_apellidos.setText("");
-            this.txt_direccion.setText("");
-            this.txt_telefono.setText("");
-            this.txt_cargo.setText("");
+            Texto_2(cb);
             this.Mostar(tbl_empleado, "select * from empleado;");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
