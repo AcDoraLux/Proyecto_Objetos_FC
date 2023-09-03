@@ -318,7 +318,9 @@ public class Form_Cliente extends javax.swing.JFrame {
 
     private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
         // TODO add your handling code here:
-        this.Nuevo();
+        if (txt_id_cliente.getText().equals("")) {
+            this.Nuevo();
+        }
     }//GEN-LAST:event_btn_nuevoActionPerformed
 
     private void tbl_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_clienteMouseClicked

@@ -226,6 +226,14 @@ public class Form_Producto extends javax.swing.JFrame {
         lbl_id_producto.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         lbl_id_producto.setText("Id_Poducto");
         jPanel3.add(lbl_id_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+
+        txt_id_producto.setEditable(false);
+        txt_id_producto.setBackground(new java.awt.Color(255, 255, 255));
+        txt_id_producto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_id_productoActionPerformed(evt);
+            }
+        });
         jPanel3.add(txt_id_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 359, -1));
         jPanel3.add(txt_cod_producto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 359, -1));
         jPanel3.add(txt_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 359, -1));
@@ -330,6 +338,10 @@ public class Form_Producto extends javax.swing.JFrame {
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_btn_facturaActionPerformed
+
+    private void txt_id_productoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_id_productoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_id_productoActionPerformed
 
     private void Nuevo() {
         try {
