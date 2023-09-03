@@ -22,7 +22,7 @@ public class Form_Cliente extends javax.swing.JFrame {
      */
     ImageIcon icono = new ImageIcon("src/Imagenes/Logo_4.png");
     boolean boolea = true;
-    
+
     public Form_Cliente() {
         initComponents();
         this.setIconImage(icono.getImage());
@@ -369,21 +369,16 @@ public class Form_Cliente extends javax.swing.JFrame {
         } catch (Exception ex) {
         }
     }//GEN-LAST:event_btn_facturaActionPerformed
-    
+
     private void Nuevo() {
         try {
             Cliente_Beans cb = new Cliente_Beans();
-            this.txt_id_cliente.setText("" + cb.Incremento_Cliente());
-            this.txt_cedula.setText("");
-            this.txt_nombres.setText("");
-            this.txt_apellidos.setText("");
-            this.txt_direccion.setText("");
-            this.txt_telefono.setText("");
+            Texto_2(cb);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
     }
-    
+
     private void Enviar() {
         try {
             Cliente_Beans cb = new Cliente_Beans();
@@ -400,7 +395,7 @@ public class Form_Cliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
     }
-    
+
     private void Mostar(javax.swing.JTable jt, String sql) {
         try {
             Cliente_Beans cb = new Cliente_Beans();
@@ -425,68 +420,37 @@ public class Form_Cliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
     }
-    
-    private void MouseClick() {
+
+    public void botones(boolean x) {
+        btn_factura.setEnabled(x);
+        btn_volver.setEnabled(x);
+        btn_eliminar.setEnabled(x);
+        btn_enviar.setEnabled(x);
+        btn_nuevo.setEnabled(x);
+    }
+
+    public void botones_2(boolean x) {
+        btn_factura.setEnabled(x);
+        btn_volver.setEnabled(x);
+        btn_actualizar.setEnabled(x);
+        btn_enviar.setEnabled(x);
+        btn_nuevo.setEnabled(x);
+    }
+
+    public void Texto(ResultSet rs) {
         try {
-            int fila = tbl_cliente.getSelectedRow();
-            txt_id_cliente.setText(tbl_cliente.getModel().getValueAt(fila, 0).toString());
-            txt_cedula.setText(tbl_cliente.getModel().getValueAt(fila, 1).toString());
-            txt_nombres.setText(tbl_cliente.getModel().getValueAt(fila, 2).toString());
-            txt_apellidos.setText(tbl_cliente.getModel().getValueAt(fila, 3).toString());
-            txt_direccion.setText(tbl_cliente.getModel().getValueAt(fila, 4).toString());
-            txt_telefono.setText(tbl_cliente.getModel().getValueAt(fila, 5).toString());
+            txt_id_cliente.setText(rs.getString("id_cliente"));
+            txt_nombres.setText(rs.getString("nombres"));
+            txt_apellidos.setText(rs.getString("apellidos"));
+            txt_direccion.setText(rs.getString("direccion"));
+            txt_cedula.setText(rs.getString("cedula"));
+            txt_telefono.setText(rs.getString("telefono"));
         } catch (Exception e) {
         }
     }
-    
-    public void actualizar() {
+
+    public void Texto_2(Cliente_Beans cl) {
         try {
-            Cliente_Beans cl = new Cliente_Beans();
-            if (boolea) {
-                String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere actualizar: ");
-                ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";");
-                if (rs.next()) {
-                    btn_factura.setEnabled(false);
-                    btn_volver.setEnabled(false);
-                    btn_eliminar.setEnabled(false);
-                    btn_enviar.setEnabled(false);
-                    btn_nuevo.setEnabled(false);
-                    txt_id_cliente.setText(rs.getString("id_cliente"));
-                    txt_nombres.setText(rs.getString("nombres"));
-                    txt_apellidos.setText(rs.getString("apellidos"));
-                    txt_direccion.setText(rs.getString("direccion"));
-                    txt_cedula.setText(rs.getString("cedula"));
-                    txt_telefono.setText(rs.getString("telefono"));
-                    JOptionPane.showMessageDialog(null, "Modifique los datos que quiere actualizar...");
-                    txt_mensaje.setText("Modifique los datos que quiere actualizar...");
-                    boolea = false;
-                    btn_cancelar.setEnabled(true);
-                }
-            } else {
-                cl.Actualizar_Cliente(Integer.parseInt(txt_id_cliente.getText()), txt_cedula.getText(), txt_nombres.getText(), txt_apellidos.getText(), txt_direccion.getText(), txt_telefono.getText());
-                btn_factura.setEnabled(true);
-                btn_volver.setEnabled(true);
-                btn_eliminar.setEnabled(true);
-                btn_enviar.setEnabled(true);
-                btn_nuevo.setEnabled(true);
-                txt_id_cliente.setText("" + cl.Incremento_Cliente());
-                txt_nombres.setText("");
-                txt_apellidos.setText("");
-                txt_direccion.setText("");
-                txt_cedula.setText("");
-                txt_telefono.setText("");
-                txt_mensaje.setText("");
-                boolea = true;
-                this.Mostar(tbl_cliente, "select * from cliente;");
-                btn_cancelar.setEnabled(false);
-            }
-        } catch (Exception e) {
-        }
-    }
-    
-    public void cancelar() {
-        try {
-            Cliente_Beans cl = new Cliente_Beans();
             txt_id_cliente.setText("" + cl.Incremento_Cliente());
             txt_nombres.setText("");
             txt_apellidos.setText("");
@@ -494,18 +458,48 @@ public class Form_Cliente extends javax.swing.JFrame {
             txt_cedula.setText("");
             txt_telefono.setText("");
             txt_mensaje.setText("");
+        } catch (Exception e) {
+        }
+    }
+
+    public void actualizar() {
+        try {
+            Cliente_Beans cl = new Cliente_Beans();
+            if (boolea) {
+                String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere actualizar: ");
+                ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";");
+                if (rs.next()) {
+                    botones(false);
+                    Texto(rs);
+                    JOptionPane.showMessageDialog(null, "Modifique los datos que quiere actualizar...");
+                    txt_mensaje.setText("Modifique los datos que quiere actualizar...");
+                    boolea = false;
+                    btn_cancelar.setEnabled(true);
+                }
+            } else {
+                cl.Actualizar_Cliente(Integer.parseInt(txt_id_cliente.getText()), txt_cedula.getText(), txt_nombres.getText(), txt_apellidos.getText(), txt_direccion.getText(), txt_telefono.getText());
+                botones(true);
+                Texto_2(cl);
+                boolea = true;
+                this.Mostar(tbl_cliente, "select * from cliente;");
+                btn_cancelar.setEnabled(false);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public void cancelar() {
+        try {
+            Cliente_Beans cl = new Cliente_Beans();
+            Texto_2(cl);
+            botones(true);
             btn_actualizar.setEnabled(true);
-            btn_eliminar.setEnabled(true);
-            btn_enviar.setEnabled(true);
-            btn_factura.setEnabled(true);
-            btn_nuevo.setEnabled(true);
-            btn_volver.setEnabled(true);
             btn_cancelar.setEnabled(false);
             boolea = true;
         } catch (Exception ex) {
         }
     }
-    
+
     public void eliminar() {
         try {
             Cliente_Beans cl = new Cliente_Beans();
@@ -513,17 +507,8 @@ public class Form_Cliente extends javax.swing.JFrame {
                 String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere Eliminar: ");
                 ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";");
                 if (rs.next()) {
-                    btn_factura.setEnabled(false);
-                    btn_volver.setEnabled(false);
-                    btn_actualizar.setEnabled(false);
-                    btn_enviar.setEnabled(false);
-                    btn_nuevo.setEnabled(false);
-                    txt_id_cliente.setText(rs.getString("id_cliente"));
-                    txt_nombres.setText(rs.getString("nombres"));
-                    txt_apellidos.setText(rs.getString("apellidos"));
-                    txt_direccion.setText(rs.getString("direccion"));
-                    txt_cedula.setText(rs.getString("cedula"));
-                    txt_telefono.setText(rs.getString("telefono"));
+                    botones_2(false);
+                    Texto(rs);
                     JOptionPane.showMessageDialog(null, "Esta es el cliente que desea eliminar...");
                     txt_mensaje.setText("Esta es el cliente que desea eliminar...");
                     boolea = false;
@@ -531,18 +516,8 @@ public class Form_Cliente extends javax.swing.JFrame {
                 }
             } else {
                 cl.Eliminar_Cliente(Integer.parseInt(txt_id_cliente.getText()));
-                btn_factura.setEnabled(true);
-                btn_volver.setEnabled(true);
-                btn_actualizar.setEnabled(true);
-                btn_enviar.setEnabled(true);
-                btn_nuevo.setEnabled(true);
-                txt_id_cliente.setText("" + cl.Incremento_Cliente());
-                txt_nombres.setText("");
-                txt_apellidos.setText("");
-                txt_direccion.setText("");
-                txt_cedula.setText("");
-                txt_telefono.setText("");
-                txt_mensaje.setText("");
+                botones_2(true);
+                Texto_2(cl);
                 boolea = true;
                 this.Mostar(tbl_cliente, "select * from cliente;");
                 btn_cancelar.setEnabled(false);
