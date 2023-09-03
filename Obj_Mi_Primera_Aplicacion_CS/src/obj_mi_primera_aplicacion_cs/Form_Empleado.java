@@ -343,8 +343,9 @@ public class Form_Empleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
-        // TODO add your handling code here:
-        this.Nuevo();
+          if (txt_id_empleado.getText().equals("")) {
+            this.Nuevo();
+          }
     }//GEN-LAST:event_btn_nuevoActionPerformed
 
     private void txt_cargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cargoActionPerformed
