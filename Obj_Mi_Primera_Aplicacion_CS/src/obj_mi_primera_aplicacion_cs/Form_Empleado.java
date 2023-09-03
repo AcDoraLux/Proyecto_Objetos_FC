@@ -443,17 +443,43 @@ public class Form_Empleado extends javax.swing.JFrame {
         }
     }
 
-    private void MouseClick() {
+    public void botones(boolean x) {
+        btn_factura.setEnabled(x);
+        btn_volver.setEnabled(x);
+        btn_eliminar.setEnabled(x);
+        btn_enviar.setEnabled(x);
+        btn_nuevo.setEnabled(x);
+    }
+
+    public void botones_2(boolean x) {
+        btn_factura.setEnabled(x);
+        btn_volver.setEnabled(x);
+        btn_actualizar.setEnabled(x);
+        btn_enviar.setEnabled(x);
+        btn_nuevo.setEnabled(x);
+    }
+
+    public void Texto(ResultSet rs) {
         try {
-            int fila = tbl_empleado.getSelectedRow();
-            System.out.println(fila);
-            txt_id_empleado.setText(tbl_empleado.getModel().getValueAt(fila, 0).toString());
-            txt_nombres.setText(tbl_empleado.getModel().getValueAt(fila, 1).toString());
-            txt_apellidos.setText(tbl_empleado.getModel().getValueAt(fila, 2).toString());
-            txt_direccion.setText(tbl_empleado.getModel().getValueAt(fila, 3).toString());
-            txt_telefono.setText(tbl_empleado.getModel().getValueAt(fila, 4).toString());
-            txt_cargo.setText(tbl_empleado.getModel().getValueAt(fila, 5).toString());
-            this.Mostar(tbl_empleado, "select * from empleado;");
+            txt_id_empleado.setText(rs.getString("id_empleado"));
+            txt_nombres.setText(rs.getString("nombres"));
+            txt_apellidos.setText(rs.getString("apellidos"));
+            txt_direccion.setText(rs.getString("direccion"));
+            txt_cargo.setText(rs.getString("cargo"));
+            txt_telefono.setText(rs.getString("telefono"));
+        } catch (Exception e) {
+        }
+    }
+
+    public void Texto_2(Empleado_Bens em) {
+        try {
+            txt_id_empleado.setText("" + em.Incremento_Empleado());
+            txt_nombres.setText("");
+            txt_apellidos.setText("");
+            txt_direccion.setText("");
+            txt_cargo.setText("");
+            txt_telefono.setText("");
+            txt_mensaje.setText("");
         } catch (Exception e) {
         }
     }
@@ -465,17 +491,8 @@ public class Form_Empleado extends javax.swing.JFrame {
                 String texto = JOptionPane.showInputDialog("Ingrese el identificador del empleado que quiere actualizar: ");
                 ResultSet rs = em.Consultar_Tabla("select * from empleado where id_empleado = " + texto + ";");
                 if (rs.next()) {
-                    btn_factura.setEnabled(false);
-                    btn_volver.setEnabled(false);
-                    btn_eliminar.setEnabled(false);
-                    btn_enviar.setEnabled(false);
-                    btn_nuevo.setEnabled(false);
-                    txt_id_empleado.setText(rs.getString("id_empleado"));
-                    txt_nombres.setText(rs.getString("nombres"));
-                    txt_apellidos.setText(rs.getString("apellidos"));
-                    txt_direccion.setText(rs.getString("direccion"));
-                    txt_cargo.setText(rs.getString("cargo"));
-                    txt_telefono.setText(rs.getString("telefono"));
+                    botones(false);
+                    Texto(rs);
                     JOptionPane.showMessageDialog(null, "Modifique los datos que quiere actualizar...");
                     txt_mensaje.setText("Modifique los datos que quiere actualizar...");
                     boolea = false;
@@ -483,18 +500,8 @@ public class Form_Empleado extends javax.swing.JFrame {
                 }
             } else {
                 em.Actualizar_Empleado(Integer.parseInt(txt_id_empleado.getText()), txt_nombres.getText(), txt_apellidos.getText(), txt_direccion.getText(), txt_telefono.getText(), txt_cargo.getText());
-                btn_factura.setEnabled(true);
-                btn_eliminar.setEnabled(true);
-                btn_volver.setEnabled(true);
-                btn_enviar.setEnabled(true);
-                btn_nuevo.setEnabled(true);
-                txt_id_empleado.setText("" + em.Incremento_Empleado());
-                txt_nombres.setText("");
-                txt_apellidos.setText("");
-                txt_direccion.setText("");
-                txt_cargo.setText("");
-                txt_telefono.setText("");
-                txt_mensaje.setText("");
+                botones(true);
+                Texto_2(em);
                 boolea = true;
                 this.Mostar(tbl_empleado, "select * from empleado;");
                 btn_cancelar.setEnabled(false);
@@ -506,19 +513,9 @@ public class Form_Empleado extends javax.swing.JFrame {
     public void cancelar() {
         try {
             Empleado_Bens em = new Empleado_Bens();
-            txt_id_empleado.setText("" + em.Incremento_Empleado());
-            txt_nombres.setText("");
-            txt_apellidos.setText("");
-            txt_direccion.setText("");
-            txt_cargo.setText("");
-            txt_telefono.setText("");
-            txt_mensaje.setText("");
-            btn_factura.setEnabled(true);
+            Texto_2(em);
+            botones(true);
             btn_actualizar.setEnabled(true);
-            btn_eliminar.setEnabled(true);
-            btn_enviar.setEnabled(true);
-            btn_nuevo.setEnabled(true);
-            btn_volver.setEnabled(true);
             btn_cancelar.setEnabled(false);
             boolea = true;
         } catch (Exception ex) {
@@ -532,17 +529,8 @@ public class Form_Empleado extends javax.swing.JFrame {
                 String texto = JOptionPane.showInputDialog("Ingrese el identificador del empleado que quiere eliminar: ");
                 ResultSet rs = em.Consultar_Tabla("select * from empleado where id_empleado = " + texto + ";");
                 if (rs.next()) {
-                    btn_factura.setEnabled(false);
-                    btn_volver.setEnabled(false);
-                    btn_actualizar.setEnabled(false);
-                    btn_enviar.setEnabled(false);
-                    btn_nuevo.setEnabled(false);
-                    txt_id_empleado.setText(rs.getString("id_empleado"));
-                    txt_nombres.setText(rs.getString("nombres"));
-                    txt_apellidos.setText(rs.getString("apellidos"));
-                    txt_direccion.setText(rs.getString("direccion"));
-                    txt_cargo.setText(rs.getString("cargo"));
-                    txt_telefono.setText(rs.getString("telefono"));
+                    botones_2(false);
+                    Texto(rs);
                     JOptionPane.showMessageDialog(null, "Esta es la persona que desea eliminar...");
                     txt_mensaje.setText("Esta es la persona que desea eliminar...");
                     boolea = false;
@@ -550,18 +538,8 @@ public class Form_Empleado extends javax.swing.JFrame {
                 }
             } else {
                 em.Eliminar_Empleado(Integer.parseInt(txt_id_empleado.getText()));
-                btn_factura.setEnabled(true);
-                btn_volver.setEnabled(true);
-                btn_actualizar.setEnabled(true);
-                btn_enviar.setEnabled(true);
-                btn_nuevo.setEnabled(true);
-                txt_id_empleado.setText("" + em.Incremento_Empleado());
-                txt_nombres.setText("");
-                txt_apellidos.setText("");
-                txt_direccion.setText("");
-                txt_cargo.setText("");
-                txt_telefono.setText("");
-                txt_mensaje.setText("");
+                botones_2(true);
+                Texto_2(em);
                 boolea = true;
                 this.Mostar(tbl_empleado, "select * from empleado;");
                 btn_cancelar.setEnabled(false);
