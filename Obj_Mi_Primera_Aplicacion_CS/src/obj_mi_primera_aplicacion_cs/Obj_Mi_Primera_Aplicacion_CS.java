@@ -5,9 +5,5 @@ public class Obj_Mi_Primera_Aplicacion_CS {
     public static void main(String[] args) throws Exception {
         Form_Menu i = new Form_Menu();
         i.setVisible(true);
-        /*
-        Holiwi 123
-        Mayra esta cantando JiJiJaJa
-        */
     }
 }
