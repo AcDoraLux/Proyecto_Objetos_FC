@@ -292,8 +292,9 @@ public class Form_Producto extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
-        // TODO add your handling code here:
-        this.Nuevo();
+        if (txt_id_producto.getText().equals("")) {
+            this.Nuevo();
+        }
     }//GEN-LAST:event_btn_nuevoActionPerformed
 
     private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
@@ -346,16 +347,7 @@ public class Form_Producto extends javax.swing.JFrame {
     private void Nuevo() {
         try {
             Producto_Beans cb = new Producto_Beans();
-            this.txt_id_producto.setText("" + cb.Incremento_Producto());
-            this.txt_cod_producto.setText("");
-            this.txt_nombre.setText("");
-            this.txt_descripcion.setText("");
-            this.txt_precio.setText("");
-            this.txt_pvp.setText("");
-            this.txt_stock_maximo.setText("");
-            this.txt_stock_minimo.setText("");
-            this.txt_fecha_elaboracion.setText("");
-            this.txt_fecha_vencimiento.setText("");
+            Texto_2(cb);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
@@ -407,80 +399,40 @@ public class Form_Producto extends javax.swing.JFrame {
         }
     }
 
-    private void MouseClick() {
+    public void botones(boolean x) {
+        btn_factura.setEnabled(x);
+        btn_volver.setEnabled(x);
+        btn_eliminar.setEnabled(x);
+        btn_enviar.setEnabled(x);
+        btn_nuevo.setEnabled(x);
+    }
+
+    public void botones_2(boolean x) {
+        btn_factura.setEnabled(x);
+        btn_volver.setEnabled(x);
+        btn_actualizar.setEnabled(x);
+        btn_enviar.setEnabled(x);
+        btn_nuevo.setEnabled(x);
+    }
+
+    public void Texto(ResultSet rs) {
         try {
-            int fila = tbl_producto.getSelectedRow();
-            System.out.println(fila);
-            txt_id_producto.setText(tbl_producto.getModel().getValueAt(fila, 0).toString());
-            txt_cod_producto.setText(tbl_producto.getModel().getValueAt(fila, 1).toString());
-            txt_nombre.setText(tbl_producto.getModel().getValueAt(fila, 2).toString());
-            txt_descripcion.setText(tbl_producto.getModel().getValueAt(fila, 3).toString());
-            txt_precio.setText(tbl_producto.getModel().getValueAt(fila, 4).toString());
-            txt_pvp.setText(tbl_producto.getModel().getValueAt(fila, 5).toString());
-            txt_stock_maximo.setText(tbl_producto.getModel().getValueAt(fila, 6).toString());
-            txt_stock_minimo.setText(tbl_producto.getModel().getValueAt(fila, 7).toString());
-            txt_fecha_elaboracion.setText(tbl_producto.getModel().getValueAt(fila, 8).toString());
-            txt_fecha_vencimiento.setText(tbl_producto.getModel().getValueAt(fila, 9).toString());
+            txt_id_producto.setText(rs.getString("id_producto"));
+            txt_nombre.setText(rs.getString("nombre"));
+            txt_cod_producto.setText(rs.getString("cod_producto"));
+            txt_descripcion.setText(rs.getString("descripcion"));
+            txt_precio.setText(rs.getString("precio_costo"));
+            txt_pvp.setText(rs.getString("pvp"));
+            txt_stock_maximo.setText(rs.getString("stock_maximo"));
+            txt_stock_minimo.setText(rs.getString("stock_minimo"));
+            txt_fecha_elaboracion.setText(rs.getString("fecha_elaboracion"));
+            txt_fecha_vencimiento.setText(rs.getString("fecha_vencimiento"));
         } catch (Exception e) {
         }
     }
 
-    public void actualizar() {
+    public void Texto_2(Producto_Beans pd) {
         try {
-            Producto_Beans pd = new Producto_Beans();
-            if (boolea) {
-                String texto = JOptionPane.showInputDialog("Ingrese el identificador del producto que quiere actualizar: ");
-                ResultSet rs = pd.Consultar_Tabla("select * from producto where id_producto = " + texto + ";");
-                if (rs.next()) {
-                    btn_factura.setEnabled(false);
-                    btn_volver.setEnabled(false);
-                    btn_eliminar.setEnabled(false);
-                    btn_enviar.setEnabled(false);
-                    btn_nuevo.setEnabled(false);
-                    txt_id_producto.setText(rs.getString("id_producto"));
-                    txt_nombre.setText(rs.getString("nombre"));
-                    txt_cod_producto.setText(rs.getString("cod_producto"));
-                    txt_descripcion.setText(rs.getString("descripcion"));
-                    txt_precio.setText(rs.getString("precio_costo"));
-                    txt_pvp.setText(rs.getString("pvp"));
-                    txt_stock_maximo.setText(rs.getString("stock_maximo"));
-                    txt_stock_minimo.setText(rs.getString("stock_minimo"));
-                    txt_fecha_elaboracion.setText(rs.getString("fecha_elaboracion"));
-                    txt_fecha_vencimiento.setText(rs.getString("fecha_vencimiento"));
-                    JOptionPane.showMessageDialog(null, "Modifique los datos que quiere actualizar...");
-                    txt_mensaje.setText("Modifique los datos que quiere actualizar...");
-                    boolea = false;
-                    btn_cancelar.setEnabled(true);
-                }
-            } else {
-                pd.Actualizar_Producto(Integer.parseInt(txt_id_producto.getText()), txt_cod_producto.getText(), txt_nombre.getText(), txt_descripcion.getText(), Double.parseDouble(txt_precio.getText()), Double.parseDouble(txt_pvp.getText()), Integer.parseInt(txt_stock_maximo.getText()), Integer.parseInt(txt_stock_minimo.getText()), txt_fecha_elaboracion.getText(), txt_fecha_vencimiento.getText());
-                btn_factura.setEnabled(true);
-                btn_eliminar.setEnabled(true);
-                btn_volver.setEnabled(true);
-                btn_enviar.setEnabled(true);
-                btn_nuevo.setEnabled(true);
-                txt_id_producto.setText("" + pd.Incremento_Producto());
-                txt_nombre.setText("");
-                txt_cod_producto.setText("");
-                txt_descripcion.setText("");
-                txt_precio.setText("");
-                txt_pvp.setText("");
-                txt_stock_maximo.setText("");
-                txt_stock_minimo.setText("");
-                txt_fecha_elaboracion.setText("");
-                txt_fecha_vencimiento.setText("");
-                txt_mensaje.setText("");
-                boolea = true;
-                this.Mostar(tbl_producto, "select * from producto;");
-                btn_cancelar.setEnabled(false);
-            }
-        } catch (Exception e) {
-        }
-    }
-
-    public void cancelar() {
-        try {
-            Producto_Beans pd = new Producto_Beans();
             txt_id_producto.setText("" + pd.Incremento_Producto());
             txt_nombre.setText("");
             txt_cod_producto.setText("");
@@ -492,12 +444,42 @@ public class Form_Producto extends javax.swing.JFrame {
             txt_fecha_elaboracion.setText("");
             txt_fecha_vencimiento.setText("");
             txt_mensaje.setText("");
+        } catch (Exception e) {
+        }
+    }
+
+    public void actualizar() {
+        try {
+            Producto_Beans pd = new Producto_Beans();
+            if (boolea) {
+                String texto = JOptionPane.showInputDialog("Ingrese el identificador del producto que quiere actualizar: ");
+                ResultSet rs = pd.Consultar_Tabla("select * from producto where id_producto = " + texto + ";");
+                if (rs.next()) {
+                    botones(false);
+                    Texto(rs);
+                    JOptionPane.showMessageDialog(null, "Modifique los datos que quiere actualizar...");
+                    txt_mensaje.setText("Modifique los datos que quiere actualizar...");
+                    boolea = false;
+                    btn_cancelar.setEnabled(true);
+                }
+            } else {
+                pd.Actualizar_Producto(Integer.parseInt(txt_id_producto.getText()), txt_cod_producto.getText(), txt_nombre.getText(), txt_descripcion.getText(), Double.parseDouble(txt_precio.getText()), Double.parseDouble(txt_pvp.getText()), Integer.parseInt(txt_stock_maximo.getText()), Integer.parseInt(txt_stock_minimo.getText()), txt_fecha_elaboracion.getText(), txt_fecha_vencimiento.getText());
+                botones(true);
+                Texto_2(pd);
+                boolea = true;
+                this.Mostar(tbl_producto, "select * from producto;");
+                btn_cancelar.setEnabled(false);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public void cancelar() {
+        try {
+            Producto_Beans pd = new Producto_Beans();
+            Texto_2(pd);
             btn_actualizar.setEnabled(true);
-            btn_factura.setEnabled(true);
-            btn_eliminar.setEnabled(true);
-            btn_enviar.setEnabled(true);
-            btn_nuevo.setEnabled(true);
-            btn_volver.setEnabled(true);
+            botones(true);
             btn_cancelar.setEnabled(false);
             boolea = true;
         } catch (Exception ex) {
@@ -511,21 +493,8 @@ public class Form_Producto extends javax.swing.JFrame {
                 String texto = JOptionPane.showInputDialog("Ingrese el identificador del producto que quiere eliminar: ");
                 ResultSet rs = pd.Consultar_Tabla("select * from producto where id_producto = " + texto + ";");
                 if (rs.next()) {
-                    btn_factura.setEnabled(false);
-                    btn_volver.setEnabled(false);
-                    btn_actualizar.setEnabled(false);
-                    btn_enviar.setEnabled(false);
-                    btn_nuevo.setEnabled(false);
-                    txt_id_producto.setText(rs.getString("id_producto"));
-                    txt_nombre.setText(rs.getString("nombre"));
-                    txt_cod_producto.setText(rs.getString("cod_producto"));
-                    txt_descripcion.setText(rs.getString("descripcion"));
-                    txt_precio.setText(rs.getString("precio_costo"));
-                    txt_pvp.setText(rs.getString("pvp"));
-                    txt_stock_maximo.setText(rs.getString("stock_maximo"));
-                    txt_stock_minimo.setText(rs.getString("stock_minimo"));
-                    txt_fecha_elaboracion.setText(rs.getString("fecha_elaboracion"));
-                    txt_fecha_vencimiento.setText(rs.getString("fecha_vencimiento"));
+                    botones_2(false);
+                    Texto(rs);
                     JOptionPane.showMessageDialog(null, "Esta es el producto que desea eliminar...");
                     txt_mensaje.setText("Esta es el producto que desea eliminar...");
                     boolea = false;
@@ -533,22 +502,8 @@ public class Form_Producto extends javax.swing.JFrame {
                 }
             } else {
                 pd.Eliminar_Producto(Integer.parseInt(txt_id_producto.getText()));
-                btn_factura.setEnabled(true);
-                btn_volver.setEnabled(true);
-                btn_actualizar.setEnabled(true);
-                btn_enviar.setEnabled(true);
-                btn_nuevo.setEnabled(true);
-                txt_id_producto.setText("" + pd.Incremento_Producto());
-                txt_nombre.setText("");
-                txt_cod_producto.setText("");
-                txt_descripcion.setText("");
-                txt_precio.setText("");
-                txt_pvp.setText("");
-                txt_stock_maximo.setText("");
-                txt_stock_minimo.setText("");
-                txt_fecha_elaboracion.setText("");
-                txt_fecha_vencimiento.setText("");
-                txt_mensaje.setText("");
+                botones_2(true);
+                Texto_2(pd);
                 boolea = true;
                 this.Mostar(tbl_producto, "select * from producto;");
                 btn_cancelar.setEnabled(false);
