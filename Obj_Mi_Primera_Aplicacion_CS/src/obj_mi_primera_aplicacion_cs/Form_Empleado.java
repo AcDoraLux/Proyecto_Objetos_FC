@@ -343,9 +343,9 @@ public class Form_Empleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
-          if (txt_id_empleado.getText().equals("")) {
+        if (txt_id_empleado.getText().equals("")) {
             this.Nuevo();
-          }
+        }
     }//GEN-LAST:event_btn_nuevoActionPerformed
 
     private void txt_cargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cargoActionPerformed
@@ -395,7 +395,7 @@ public class Form_Empleado extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
-         //TME = 2ta
+        //TME = 2ta
         //TPE = 2ta
         //TPR = (2ta + 2ta) / 2
         //TPR = 2ta
@@ -529,11 +529,11 @@ public class Form_Empleado extends javax.swing.JFrame {
                 this.Mostar(tbl_empleado, "select * from empleado;");//¿? ta
                 btn_cancelar.setEnabled(false);//¿? ta
             }
-            
+
         } catch (Exception e) {
-            
+
         }
-         //TME = ta + tc
+        //TME = ta + tc
         //TPE = 13ta + 3tc
         //TPR = ((ta + tc)+(13ta+ 2tc))/2
         //TPR = 7ta + 2tc
@@ -579,7 +579,7 @@ public class Form_Empleado extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
         }
-         //TME = ta + tc
+        //TME = ta + tc
         //TPE = 13ta + 3tc
         //TPR = ((ta + tc)+(13ta + 3tc))/2
         //TPR = 7ta + 2tc
