@@ -374,11 +374,15 @@ public class Form_Cliente extends javax.swing.JFrame {
 
     private void Nuevo() {
         try {
-            Cliente_Beans cb = new Cliente_Beans();
-            Texto_2(cb);
+            Cliente_Beans cb = new Cliente_Beans();       //ta
+            Texto_2(cb);                                  //ta
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
+        //TME = 2ta
+        //TPE = 2ta
+        //TPR = (2ta + 2ta) / 2
+        //TPR = 2ta
     }
 
     private void Enviar() {
@@ -400,66 +404,85 @@ public class Form_Cliente extends javax.swing.JFrame {
 
     private void Mostar(javax.swing.JTable jt, String sql) {
         try {
-            Cliente_Beans cb = new Cliente_Beans();
+            Cliente_Beans cb = new Cliente_Beans();               //ta
             ResultSet rs;
-            DefaultTableModel modelo = new DefaultTableModel();
-            jt.setModel(modelo);
-            rs = cb.Consultar_Tabla(sql);
+            DefaultTableModel modelo = new DefaultTableModel();   //ta
+            jt.setModel(modelo);                                  //ta
+            rs = cb.Consultar_Tabla(sql);                         //ta
             ResultSetMetaData rsmd;
-            rsmd = rs.getMetaData();
-            int cantcolumnas = rsmd.getColumnCount();
-            for (int i = 1; i <= cantcolumnas; i++) {
-                modelo.addColumn(rsmd.getColumnLabel(i));
+            rsmd = rs.getMetaData();                              //ta
+            int cantcolumnas = rsmd.getColumnCount();             //ta
+            for (int i = 1; i <= cantcolumnas; i++) {             //(cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc
+                modelo.addColumn(rsmd.getColumnLabel(i));         //¿?(cantcolumnas)(ta)
             }
-            while (rs.next()) {
-                Object[] columna = new Object[cantcolumnas];
-                for (int i = 0; i < cantcolumnas; i++) {
-                    columna[i] = rs.getObject(i + 1);
+            while (rs.next()) {                                   //(rs.next())tc + tc
+                Object[] columna = new Object[cantcolumnas];      //¿?(rs.next())(ta)
+                for (int i = 0; i < cantcolumnas; i++) {          //¿?(rs.next())((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc))
+                    columna[i] = rs.getObject(i + 1);             //¿?(rs.next())(ta+to)
                 }
-                modelo.addRow(columna);
+                modelo.addRow(columna);                           //¿?(rs.next())(ta)
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
+        //TME = (cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())tc + 7ta + 2tc
+        //TPE = (cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc)) + 2((rs.next())(ta)) + (rs.next())(ta+to) + (rs.next())tc + 7ta + 2tc
+        //TPR = (((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())tc + 7ta + 2tc)+((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc)) + 2((rs.next())(ta)) + (rs.next())(ta+to) + (rs.next())tc + 7ta + 2tc)) / 2
     }
 
     public void botones(boolean x) {
-        btn_factura.setEnabled(x);
-        btn_volver.setEnabled(x);
-        btn_eliminar.setEnabled(x);
-        btn_enviar.setEnabled(x);
-        btn_nuevo.setEnabled(x);
+        btn_factura.setEnabled(x);   // Ta
+        btn_volver.setEnabled(x);    // Ta
+        btn_eliminar.setEnabled(x);  // Ta
+        btn_enviar.setEnabled(x);    // Ta
+        btn_nuevo.setEnabled(x);     // Ta
+        //TME = Ta * 5
+        //TPE = Ta * 5
+        //TPR = (Ta * 5 + Ta * 5) / 2
+        //TPR = 5 * Ta
     }
 
     public void botones_2(boolean x) {
-        btn_factura.setEnabled(x);
-        btn_volver.setEnabled(x);
-        btn_actualizar.setEnabled(x);
-        btn_enviar.setEnabled(x);
-        btn_nuevo.setEnabled(x);
+        btn_factura.setEnabled(x);    // Ta
+        btn_volver.setEnabled(x);     // Ta
+        btn_actualizar.setEnabled(x); // Ta
+        btn_enviar.setEnabled(x);     // Ta
+        btn_nuevo.setEnabled(x);      // Ta
+        //TME = Ta * 5
+        //TPE = Ta * 5
+        //TPR = (Ta * 5 + Ta * 5) / 2
+        //TPR = 5 * Ta
     }
 
     public void Texto(ResultSet rs) {
         try {
-            txt_id_cliente.setText(rs.getString("id_cliente"));
-            txt_nombres.setText(rs.getString("nombres"));
-            txt_apellidos.setText(rs.getString("apellidos"));
-            txt_direccion.setText(rs.getString("direccion"));
-            txt_cedula.setText(rs.getString("cedula"));
-            txt_telefono.setText(rs.getString("telefono"));
+            txt_id_cliente.setText(rs.getString("id_cliente"));      // Ta + To
+            txt_nombres.setText(rs.getString("nombres"));            // Ta + To
+            txt_apellidos.setText(rs.getString("apellidos"));        // Ta + To
+            txt_direccion.setText(rs.getString("direccion"));        // Ta + To
+            txt_cedula.setText(rs.getString("cedula"));              // Ta + To
+            txt_telefono.setText(rs.getString("telefono"));          // Ta + To
+            //TME = (Ta + To) * 6
+            //TPE = (Ta + To) * 6
+            //TPR = (((Ta + To) * 6)+((Ta + To) * 6)) / 2
+            //TPR = (Ta + To) * 6
         } catch (Exception e) {
         }
     }
 
     public void Texto_2(Cliente_Beans cl) {
         try {
-            txt_id_cliente.setText("" + cl.Incremento_Cliente());
-            txt_nombres.setText("");
-            txt_apellidos.setText("");
-            txt_direccion.setText("");
-            txt_cedula.setText("");
-            txt_telefono.setText("");
-            txt_mensaje.setText("");
+            txt_id_cliente.setText("" + cl.Incremento_Cliente());  // Ta + To
+            txt_nombres.setText("");                                // Ta
+            txt_apellidos.setText("");                              // Ta
+            txt_direccion.setText("");                              // Ta
+            txt_cedula.setText("");                                 // Ta
+            txt_telefono.setText("");                               // Ta
+            txt_mensaje.setText("");                                // Ta
+            //TME = 7Ta + To
+            //TPE = 7Ta + To
+            //TPR = ((7Ta + To)+(7Ta + To)) / 2
+            //TPR = 7Ta + To
         } catch (Exception e) {
         }
     }
