@@ -493,25 +493,25 @@ public class Form_Cliente extends javax.swing.JFrame {
 
     public void actualizar() {
         try {
-            Cliente_Beans cl = new Cliente_Beans();                                                                            //ta
-            if (boolea) {                                                                                                      //tc
-                String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere actualizar: ");    //¿? ta
-                ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";");                  //¿? ta
-                if (rs.next()) {                                                                                               //¿? tc
-                    botones(false);                                                                                            //¿? ta
-                    Texto(rs);                                                                                                 //¿? ta  
+            Cliente_Beans cl = new Cliente_Beans(); //ta
+            if (boolea) { //tc
+                String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere actualizar: "); //¿? ta
+                ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";"); //¿? ta
+                if (rs.next()) { //¿? tc
+                    botones(false); //¿? ta
+                    Texto(rs); //¿? ta  
                     JOptionPane.showMessageDialog(null, "Modifique los datos que quiere actualizar...");
                     txt_mensaje.setText("Modifique los datos que quiere actualizar...");
-                    boolea = false;                                                                                            //¿? ta
-                    btn_cancelar.setEnabled(true);                                                                             //¿? ta
+                    boolea = false; //¿? ta
+                    btn_cancelar.setEnabled(true); //¿? ta
                 }
             } else {
                 cl.Actualizar_Cliente(Integer.parseInt(txt_id_cliente.getText()), txt_cedula.getText(), txt_nombres.getText(), txt_apellidos.getText(), txt_direccion.getText(), txt_telefono.getText()); //¿? ta
-                botones(true);                                                                                                 //¿? ta
-                Texto_2(cl);                                                                                                   //¿? ta
-                boolea = true;                                                                                                 //¿? ta
-                this.Mostar(tbl_cliente, "select * from cliente;");                                                            //¿? ta 
-                btn_cancelar.setEnabled(false);                                                                                //¿? ta 
+                botones(true); //¿? ta
+                Texto_2(cl); //¿? ta
+                boolea = true; //¿? ta
+                this.Mostar(tbl_cliente, "select * from cliente;"); //¿? ta 
+                btn_cancelar.setEnabled(false); //¿? ta 
             }                                                                                                                  
         } catch (Exception e) {
         }
@@ -539,25 +539,25 @@ public class Form_Cliente extends javax.swing.JFrame {
 
     public void eliminar() {
         try {
-            Cliente_Beans cl = new Cliente_Beans();                                                                        // ta
-            if (boolea) {                                                                                                  // tc
-                String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere Eliminar: ");  //¿? ta
-                ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";");              //¿? ta
-                if (rs.next()) {                                                                                           //¿? tc
-                    botones_2(false);                                                                                      //¿? ta
-                    Texto(rs);                                                                                             //¿? ta
+            Cliente_Beans cl = new Cliente_Beans(); // ta
+            if (boolea) { // tc
+                String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere Eliminar: "); //¿? ta
+                ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";"); //¿? ta
+                if (rs.next()) { //¿? tc
+                    botones_2(false); //¿? ta
+                    Texto(rs); //¿? ta
                     JOptionPane.showMessageDialog(null, "Esta es el cliente que desea eliminar...");
-                    txt_mensaje.setText("Esta es el cliente que desea eliminar...");                                       //¿? ta
-                    boolea = false;                                                                                        //¿? ta  
-                    btn_cancelar.setEnabled(true);                                                                         //¿? ta
+                    txt_mensaje.setText("Esta es el cliente que desea eliminar..."); //¿? ta
+                    boolea = false; //¿? ta  
+                    btn_cancelar.setEnabled(true); //¿? ta
                 }
             } else {
-                cl.Eliminar_Cliente(Integer.parseInt(txt_id_cliente.getText()));                                           //¿? ta
-                botones_2(true);                                                                                           //¿? ta
-                Texto_2(cl);                                                                                               //¿? ta
-                boolea = true;                                                                                             //¿? ta
+                cl.Eliminar_Cliente(Integer.parseInt(txt_id_cliente.getText())); //¿? ta
+                botones_2(true); //¿? ta
+                Texto_2(cl); //¿? ta
+                boolea = true; //¿? ta
                 this.Mostar(tbl_cliente, "select * from cliente;");
-                btn_cancelar.setEnabled(false);                                                                            //¿? ta
+                btn_cancelar.setEnabled(false); //¿? ta
             }                                                                                                              
         } catch (Exception ex) {
         }

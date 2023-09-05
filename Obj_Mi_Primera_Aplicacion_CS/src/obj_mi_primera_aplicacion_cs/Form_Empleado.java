@@ -343,9 +343,9 @@ public class Form_Empleado extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_enviarActionPerformed
 
     private void btn_nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoActionPerformed
-          if (txt_id_empleado.getText().equals("")) {
+        if (txt_id_empleado.getText().equals("")) {
             this.Nuevo();
-          }
+        }
     }//GEN-LAST:event_btn_nuevoActionPerformed
 
     private void txt_cargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cargoActionPerformed
@@ -389,22 +389,26 @@ public class Form_Empleado extends javax.swing.JFrame {
 
     private void Nuevo() {
         try {
-            Empleado_Bens cb = new Empleado_Bens();
-            Texto_2(cb);
+            Empleado_Bens cb = new Empleado_Bens();//ta
+            Texto_2(cb);                                  //ta
             this.Mostar(tbl_empleado, "select * from empleado;");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
+        //TME = 2ta
+        //TPE = 2ta
+        //TPR = (2ta + 2ta) / 2
+        //TPR = 2ta
     }
 
     private void Enviar() {
         try {
             Empleado_Bens cb = new Empleado_Bens();
-            cb.setId_empleado(Integer.parseInt(txt_id_empleado.getText()));
-            cb.setNombres(txt_nombres.getText());
-            cb.setApellidos(txt_apellidos.getText());
-            cb.setDireccion(txt_direccion.getText());
-            cb.setTelefono(txt_telefono.getText());
+            cb.setId_empleado(Integer.parseInt(txt_id_empleado.getText()));    //ta   
+            cb.setNombres(txt_nombres.getText());                                 //ta
+            cb.setApellidos(txt_apellidos.getText());                             //ta  
+            cb.setDireccion(txt_direccion.getText());                             //ta
+            cb.setTelefono(txt_telefono.getText());                               //ta
             cb.setCargo(txt_cargo.getText());
             cb.Insertar_Empleado();
             this.Mostar(tbl_empleado, "select * from empleado;");
@@ -412,136 +416,173 @@ public class Form_Empleado extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
+        //TME = 6ta
+        //TPE = 6ta
+        //TPR = (6ta + 6ta) / 2
+        //TPR = 6ta
     }
 
     private void Mostar(javax.swing.JTable jt, String sql) {
         try {
-            Empleado_Bens cb = new Empleado_Bens();
+            Empleado_Bens cb = new Empleado_Bens(); //ta
             ResultSet rs;
-            DefaultTableModel modelo = new DefaultTableModel();
-            jt.setModel(modelo);
-            rs = cb.Consultar_Tabla(sql);
+            DefaultTableModel modelo = new DefaultTableModel();   //ta
+            jt.setModel(modelo);                                  //ta
+            rs = cb.Consultar_Tabla(sql);                         //ta
             ResultSetMetaData rsmd;
-            rsmd = rs.getMetaData();
-            int cantcolumnas = rsmd.getColumnCount();
-            for (int i = 1; i <= cantcolumnas; i++) {
-                modelo.addColumn(rsmd.getColumnLabel(i));
+            rsmd = rs.getMetaData();                              //ta
+            int cantcolumnas = rsmd.getColumnCount();             //ta
+            for (int i = 1; i <= cantcolumnas; i++) {             //(cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc
+                modelo.addColumn(rsmd.getColumnLabel(i));         //¿?(cantcolumnas)(ta)
             }
-            while (rs.next()) {
-                Object[] columna = new Object[cantcolumnas];
-                for (int i = 0; i < cantcolumnas; i++) {
-                    columna[i] = rs.getObject(i + 1);
+            while (rs.next()) {                                   //(rs.next())tc + tc
+                Object[] columna = new Object[cantcolumnas];      //¿?(rs.next())(ta)
+                for (int i = 0; i < cantcolumnas; i++) {          //¿?(rs.next())((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc))
+                    columna[i] = rs.getObject(i + 1);             //¿?(rs.next())(ta+to)
                 }
-                modelo.addRow(columna);
+                modelo.addRow(columna);                           //¿?(rs.next())(ta)
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
+        //TME = (cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())tc + 7ta + 2tc
+        //TPE = (cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc)) + 2((rs.next())(ta)) + (rs.next())(ta+to) + (rs.next())tc + 7ta + 2tc
+        //TPR = (((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())tc + 7ta + 2tc)+((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc)) + 2((rs.next())(ta)) + (rs.next())(ta+to) + (rs.next())tc + 7ta + 2tc)) / 2
     }
 
     public void botones(boolean x) {
-        btn_factura.setEnabled(x);
-        btn_volver.setEnabled(x);
-        btn_eliminar.setEnabled(x);
-        btn_enviar.setEnabled(x);
-        btn_nuevo.setEnabled(x);
+        btn_factura.setEnabled(x);// Ta
+        btn_volver.setEnabled(x);    // Ta
+        btn_eliminar.setEnabled(x);  // Ta
+        btn_enviar.setEnabled(x);    // Ta
+        btn_nuevo.setEnabled(x);     // Ta
+        //TME = Ta * 5
+        //TPE = Ta * 5
+        //TPR = (Ta * 5 + Ta * 5) / 2
+        //TPR = 5 * Ta
     }
 
     public void botones_2(boolean x) {
-        btn_factura.setEnabled(x);
-        btn_volver.setEnabled(x);
-        btn_actualizar.setEnabled(x);
-        btn_enviar.setEnabled(x);
-        btn_nuevo.setEnabled(x);
+        btn_factura.setEnabled(x);// Ta
+        btn_volver.setEnabled(x);     // Ta
+        btn_actualizar.setEnabled(x); // Ta
+        btn_enviar.setEnabled(x);     // Ta
+        btn_nuevo.setEnabled(x);      // Ta
+        //TME = Ta * 5
+        //TPE = Ta * 5
+        //TPR = (Ta * 5 + Ta * 5) / 2
+        //TPR = 5 * Ta
     }
 
     public void Texto(ResultSet rs) {
         try {
-            txt_id_empleado.setText(rs.getString("id_empleado"));
-            txt_nombres.setText(rs.getString("nombres"));
-            txt_apellidos.setText(rs.getString("apellidos"));
-            txt_direccion.setText(rs.getString("direccion"));
-            txt_cargo.setText(rs.getString("cargo"));
-            txt_telefono.setText(rs.getString("telefono"));
+            txt_id_empleado.setText(rs.getString("id_empleado"));// Ta + To
+            txt_nombres.setText(rs.getString("nombres"));// Ta + To
+            txt_apellidos.setText(rs.getString("apellidos"));// Ta + To
+            txt_direccion.setText(rs.getString("direccion"));// Ta + To
+            txt_cargo.setText(rs.getString("cargo"));// Ta + To
+            txt_telefono.setText(rs.getString("telefono"));// Ta + To
+            //TME = (Ta + To) * 6
+            //TPE = (Ta + To) * 6
+            //TPR = (((Ta + To) * 6)+((Ta + To) * 6)) / 2
+            //TPR = (Ta + To) * 6
         } catch (Exception e) {
         }
     }
 
     public void Texto_2(Empleado_Bens em) {
         try {
-            txt_id_empleado.setText("" + em.Incremento_Empleado());
-            txt_nombres.setText("");
-            txt_apellidos.setText("");
-            txt_direccion.setText("");
-            txt_cargo.setText("");
-            txt_telefono.setText("");
-            txt_mensaje.setText("");
+            txt_id_empleado.setText("" + em.Incremento_Empleado()); // Ta + To
+            txt_nombres.setText("");  // Ta
+            txt_apellidos.setText("");  // Ta
+            txt_direccion.setText("");  // Ta
+            txt_cargo.setText("");  // Ta
+            txt_telefono.setText("");  // Ta
+            txt_mensaje.setText("");  // Ta
+            //TME = 7Ta + To
+            //TPE = 7Ta + To
+            //TPR = ((7Ta + To)+(7Ta + To)) / 2
+            //TPR = 7Ta + To
         } catch (Exception e) {
         }
     }
 
     public void actualizar() {
         try {
-            Empleado_Bens em = new Empleado_Bens();
-            if (boolea) {
-                String texto = JOptionPane.showInputDialog("Ingrese el identificador del empleado que quiere actualizar: ");
-                ResultSet rs = em.Consultar_Tabla("select * from empleado where id_empleado = " + texto + ";");
-                if (rs.next()) {
-                    botones(false);
-                    Texto(rs);
+            Empleado_Bens em = new Empleado_Bens();     //ta
+            if (boolea) {       //tc
+                String texto = JOptionPane.showInputDialog("Ingrese el identificador del empleado que quiere actualizar: ");//¿? ta
+                ResultSet rs = em.Consultar_Tabla("select * from empleado where id_empleado = " + texto + ";");//¿? ta
+                if (rs.next()) {//¿? tc
+                    botones(false);//¿? ta
+                    Texto(rs);//¿? ta 
                     JOptionPane.showMessageDialog(null, "Modifique los datos que quiere actualizar...");
                     txt_mensaje.setText("Modifique los datos que quiere actualizar...");
-                    boolea = false;
-                    btn_cancelar.setEnabled(true);
+                    boolea = false;//¿? ta
+                    btn_cancelar.setEnabled(true);//¿? ta
                 }
             } else {
-                em.Actualizar_Empleado(Integer.parseInt(txt_id_empleado.getText()), txt_nombres.getText(), txt_apellidos.getText(), txt_direccion.getText(), txt_telefono.getText(), txt_cargo.getText());
-                botones(true);
-                Texto_2(em);
-                boolea = true;
-                this.Mostar(tbl_empleado, "select * from empleado;");
-                btn_cancelar.setEnabled(false);
+                em.Actualizar_Empleado(Integer.parseInt(txt_id_empleado.getText()), txt_nombres.getText(), txt_apellidos.getText(), txt_direccion.getText(), txt_telefono.getText(), txt_cargo.getText());//¿? ta
+                botones(true); //¿? ta
+                Texto_2(em); //¿? ta
+                boolea = true; //¿? ta
+                this.Mostar(tbl_empleado, "select * from empleado;");//¿? ta
+                btn_cancelar.setEnabled(false);//¿? ta
             }
+
         } catch (Exception e) {
+
         }
+        //TME = ta + tc
+        //TPE = 13ta + 3tc
+        //TPR = ((ta + tc)+(13ta+ 2tc))/2
+        //TPR = 7ta + 2tc
     }
 
     public void cancelar() {
         try {
-            Empleado_Bens em = new Empleado_Bens();
-            Texto_2(em);
-            botones(true);
-            btn_actualizar.setEnabled(true);
-            btn_cancelar.setEnabled(false);
-            boolea = true;
+            Empleado_Bens em = new Empleado_Bens();// ta
+            Texto_2(em);// ta
+            botones(true);// ta
+            btn_actualizar.setEnabled(true);// ta
+            btn_cancelar.setEnabled(false);// ta
+            boolea = true;// ta
         } catch (Exception ex) {
         }
+        //TME = 6ta
+        //TPE = 6ta
+        //TPR = (6ta + 6ta)/2
+        //TPR = 6ta
     }
 
     public void eliminar() {
         try {
-            Empleado_Bens em = new Empleado_Bens();
-            if (boolea) {
-                String texto = JOptionPane.showInputDialog("Ingrese el identificador del empleado que quiere eliminar: ");
-                ResultSet rs = em.Consultar_Tabla("select * from empleado where id_empleado = " + texto + ";");
-                if (rs.next()) {
-                    botones_2(false);
-                    Texto(rs);
+            Empleado_Bens em = new Empleado_Bens();// ta
+            if (boolea) {// tc
+                String texto = JOptionPane.showInputDialog("Ingrese el identificador del empleado que quiere eliminar: ");//¿? ta
+                ResultSet rs = em.Consultar_Tabla("select * from empleado where id_empleado = " + texto + ";");//¿? ta
+                if (rs.next()) {//¿? tc
+                    botones_2(false);//¿? ta
+                    Texto(rs);//¿? ta
                     JOptionPane.showMessageDialog(null, "Esta es la persona que desea eliminar...");
-                    txt_mensaje.setText("Esta es la persona que desea eliminar...");
-                    boolea = false;
-                    btn_cancelar.setEnabled(true);
+                    txt_mensaje.setText("Esta es la persona que desea eliminar...");//¿? ta
+                    boolea = false;//¿? ta
+                    btn_cancelar.setEnabled(true);//¿? ta
                 }
             } else {
-                em.Eliminar_Empleado(Integer.parseInt(txt_id_empleado.getText()));
-                botones_2(true);
-                Texto_2(em);
-                boolea = true;
+                em.Eliminar_Empleado(Integer.parseInt(txt_id_empleado.getText()));//¿? ta
+                botones_2(true);//¿? ta
+                Texto_2(em);//¿? ta
+                boolea = true;//¿? ta
                 this.Mostar(tbl_empleado, "select * from empleado;");
-                btn_cancelar.setEnabled(false);
+                btn_cancelar.setEnabled(false);//¿? ta
             }
         } catch (Exception ex) {
         }
+        //TME = ta + tc
+        //TPE = 13ta + 3tc
+        //TPR = ((ta + tc)+(13ta + 3tc))/2
+        //TPR = 7ta + 2tc
     }
     /**
      * @param args the command line arguments
