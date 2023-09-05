@@ -995,348 +995,433 @@ public class Form_Factura extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_productoActionPerformed
 
     public void Fecha_Actual() {
-        LocalDate fa = LocalDate.now();
-        lbl_fecha.setText("   " + fa.toString());
+        LocalDate fa = LocalDate.now(); // ta
+        lbl_fecha.setText("   " + fa.toString()); // ta
+        //TPR = 2ta
     }
 
     public void id_factura() {
         try {
-            Factura_Beans fc = new Factura_Beans();
-            String x = "" + fc.Incremento_factura();
-            lbl_id_factura.setText(x);
+            Factura_Beans fc = new Factura_Beans(); // Ta
+
+            String x = "" + fc.Incremento_factura(); // Ta + To
+
+            lbl_id_factura.setText(x); // Ta
         } catch (Exception e) {
         }
+        //TPR = 3ta + to 
     }
 
     public void cliente_combo() throws SQLException {
         try {
-            Cliente_Beans cl = new Cliente_Beans();
-            ResultSet rs = cl.Consultar_Tabla("select * from cliente;");
-            int x = 1;
-            while (rs.next()) {
-                cbx_cliente.addItem(x + ". " + rs.getString("nombres") + " " + rs.getString("apellidos"));
-                a_cl.add(new Cliente_Beans(parseInt(rs.getString("id_cliente")), rs.getString("cedula"), rs.getString("nombres"), rs.getString("apellidos"), rs.getString("direccion"), rs.getString("telefono")));
-                x++;
+            Cliente_Beans cl = new Cliente_Beans(); // Ta
+
+            ResultSet rs = cl.Consultar_Tabla("select * from cliente;"); // Ta 
+
+            int x = 1; // Ta
+
+            while (rs.next()) { // Ta + To 
+                cbx_cliente.addItem(x + ". " + rs.getString("nombres") + " " + rs.getString("apellidos")); //¿? Ta + To
+                a_cl.add(new Cliente_Beans(parseInt(rs.getString("id_cliente")), rs.getString("cedula"), rs.getString("nombres"), rs.getString("apellidos"), rs.getString("direccion"), rs.getString("telefono"))); //¿? Ta + To
+                x++; //¡? Ta
             }
         } catch (Exception e) {
 
         }
+        //TME = 4ta + to
+        //TPE = 7ta + to
+        //TPR = ((4ta + to)+(7ta + to))/2
     }
 
     public void cliente_combo_items() throws Exception {
-        int i = cbx_cliente.getSelectedIndex();
-        Cliente_Beans cl = new Cliente_Beans();
-        ResultSet rs = cl.Consultar_Tabla("select cedula, telefono, direccion from cliente where id_cliente = " + a_cl.get(i - 1).getId_cliente() + ";");
-        if (rs.next()) {
-            lbl_cedula.setText("Cedula: " + rs.getString("cedula"));
-            lbl_telefono.setText("Telefono: " + rs.getString("telefono"));
-            lbl_direccion.setText("Direccion: " + rs.getString("direccion"));
+        int i = cbx_cliente.getSelectedIndex(); // Ta
+
+        Cliente_Beans cl = new Cliente_Beans(); // Ta
+
+        ResultSet rs;
+
+        rs = cl.Consultar_Tabla("select cedula, telefono, direccion from cliente where id_cliente = " + a_cl.get(i - 1).getId_cliente() + ";"); // Ta
+        if (rs.next()) { // Ta + To (si la consulta devuelve resultados)
+            lbl_cedula.setText("Cedula: " + rs.getString("cedula")); // Ta
+            lbl_telefono.setText("Telefono: " + rs.getString("telefono")); // Ta
+            lbl_direccion.setText("Direccion: " + rs.getString("direccion")); // Ta
         }
+        //TME = 4ta + to
+        //TPE = 7ta + to
+        //TPR = ((4ta + to)+(7ta + to))/2
     }
 
     public void cliente_combo_buscar() throws SQLException {
         try {
-            String texto_i = cbx_cliente.getSelectedItem().toString();
-            int x = parseInt(texto_i);
-            Cliente_Beans cl = new Cliente_Beans();
-            ResultSet rs = cl.Consultar_Tabla("select cedula, telefono, direccion from cliente where id_cliente = " + texto_i + ";");
-            if (rs.next()) {
-                lbl_cedula.setText("Cedula: " + rs.getString("cedula"));
-                lbl_telefono.setText("Telefono: " + rs.getString("telefono"));
-                lbl_direccion.setText("Direccion: " + rs.getString("direccion"));
+            String texto_i = cbx_cliente.getSelectedItem().toString(); // Ta
+
+            int x = parseInt(texto_i); // Ta
+
+            Cliente_Beans cl = new Cliente_Beans(); // Ta
+
+            ResultSet rs;
+
+            rs = cl.Consultar_Tabla("select cedula, telefono, direccion from cliente where id_cliente = " + texto_i + ";"); // Ta 
+
+            if (rs.next()) { // Ta + To (si la consulta devuelve resultados)
+                lbl_cedula.setText("Cedula: " + rs.getString("cedula")); // Ta
+                lbl_telefono.setText("Telefono: " + rs.getString("telefono")); // Ta
+                lbl_direccion.setText("Direccion: " + rs.getString("direccion")); // Ta
             }
-            cbx_cliente.setSelectedItem(cbx_cliente.getItemAt(x));
+
+            cbx_cliente.setSelectedItem(cbx_cliente.getItemAt(x)); // Ta
         } catch (Exception e) {
 
         }
+        //TME = 5 * Ta + to
+        //TPE = 9 * ta + to
+        //TPR = ((5 * Ta + to)+(9 * ta + to))/2
     }
 
     public void productos_lista() {
         try {
-            Producto_Beans pt = new Producto_Beans();
-            ResultSet rs = pt.Consultar_Tabla("select * from producto;");
-            DefaultListModel modelo = new DefaultListModel();
-            int x = 1;
-            while (rs.next()) {
-                modelo.addElement(x + ". " + rs.getString("nombre") + " - " + rs.getString("descripcion"));
-                a_pt.add(new Producto_Beans(parseInt(rs.getString("id_producto")), rs.getString("cod_producto"), rs.getString("nombre"), rs.getString("descripcion"), Double.parseDouble(rs.getString("precio_costo")), Double.parseDouble(rs.getString("pvp")), parseInt(rs.getString("stock_maximo")), parseInt(rs.getString("stock_minimo")), rs.getString("fecha_elaboracion"), rs.getString("fecha_vencimiento")));
-                x++;
+            Producto_Beans pt = new Producto_Beans(); // Ta
+
+            ResultSet rs; // Ta
+
+            rs = pt.Consultar_Tabla("select * from producto;"); // Ta
+
+            DefaultListModel modelo = new DefaultListModel(); // Ta
+
+            int x = 1; // Ta
+
+            while (rs.next()) { // (rs.next()) * (Ta + To)
+                modelo.addElement(x + ". " + rs.getString("nombre") + " - " + rs.getString("descripcion")); // Ta
+                a_pt.add(new Producto_Beans(parseInt(rs.getString("id_producto")), rs.getString("cod_producto"), rs.getString("nombre"), rs.getString("descripcion"), Double.parseDouble(rs.getString("precio_costo")), Double.parseDouble(rs.getString("pvp")), parseInt(rs.getString("stock_maximo")), parseInt(rs.getString("stock_minimo")), rs.getString("fecha_elaboracion"), rs.getString("fecha_vencimiento"))); // Ta
+                x++; // Ta
             }
-            list_lista_productos.setModel(modelo);
+
+            list_lista_productos.setModel(modelo); // Ta
         } catch (Exception e) {
 
         }
+        //TME = 2 * Ta
+        //TPE = (rs.next()) * (3 * Ta + To)
+        //TPR = ((2 * Ta)+((rs.next()) * (3 * Ta + To)))/2
     }
 
     public void producto_informacion() {
         try {
-            int i = list_lista_productos.getSelectedIndex();
-            Producto_Beans pt = new Producto_Beans();
-            ResultSet rs = pt.Consultar_Tabla("select cod_producto, pvp, fecha_elaboracion, fecha_vencimiento from producto where id_producto = " + a_pt.get(i).getId_producto() + ";");
-            if (rs.next()) {
-                lbl_titulo_cod_producto.setText("Codigo del producto:");
-                lbl_cod_producto.setText("" + rs.getString("cod_producto"));
-                lbl_titulo_pvp.setText("Precio de venta al publico:");
-                lbl_pvp.setText("" + rs.getString("pvp"));
-                lbl_titulo_fecha_elaboracion.setText("Fecha de Elaboracion:");
-                lbl_fecha_elaboracion.setText("" + rs.getString("fecha_elaboracion"));
-                lbl_titulo_fecha_vencimiento.setText("Fecha de Vencimiento:");
-                lbl_fecha_vencimiento.setText("" + rs.getString("fecha_vencimiento"));
+            int i = list_lista_productos.getSelectedIndex(); // Ta
+
+            Producto_Beans pt = new Producto_Beans(); // Ta
+
+            ResultSet rs;
+
+            rs = pt.Consultar_Tabla("select cod_producto, pvp, fecha_elaboracion, fecha_vencimiento from producto where id_producto = " + a_pt.get(i).getId_producto() + ";"); // Ta 
+
+            if (rs.next()) { // Ta + To 
+                lbl_titulo_cod_producto.setText("Codigo del producto:"); // Ta
+                lbl_cod_producto.setText("" + rs.getString("cod_producto")); // Ta
+                lbl_titulo_pvp.setText("Precio de venta al público:"); // Ta
+                lbl_pvp.setText("" + rs.getString("pvp")); // Ta
+                lbl_titulo_fecha_elaboracion.setText("Fecha de Elaboración:"); // Ta
+                lbl_fecha_elaboracion.setText("" + rs.getString("fecha_elaboracion")); // Ta
+                lbl_titulo_fecha_vencimiento.setText("Fecha de Vencimiento:"); // Ta
+                lbl_fecha_vencimiento.setText("" + rs.getString("fecha_vencimiento")); // Ta
             }
         } catch (Exception e) {
 
         }
+        //TME = 3 * Ta
+        //TPE = 7 * Ta + To
+        //TPR = ((3 * Ta)+(7 * Ta + To))/2
     }
 
     public void producto_buscar() {
         try {
-            Producto_Beans pt = new Producto_Beans();
-            String i = txt_buscar_producto.getText();
-            int x = 0;
+            Producto_Beans pt = new Producto_Beans(); // Ta
+
+            String i = txt_buscar_producto.getText(); // Ta
+
+            int x = 0; // Ta
+
             try {
-                x = parseInt(i);
+                x = parseInt(i); // To
             } catch (Exception e) {
             }
-            boolean f = true;
+
+            boolean f = true; // Ta
+
             ResultSet rs;
-            for (int j = 0; j < a_pt.size(); j++) {
-                if (x == a_pt.get(j).getId_producto()) {
-                    rs = pt.Consultar_Tabla("select * from producto where id_producto = " + i + ";");
+
+            for (int j = 0; j < a_pt.size(); j++) { // (a_pt.size()) * (Ta + Tc)
+                if (x == a_pt.get(j).getId_producto()) { // Ta + Tc
+                    rs = pt.Consultar_Tabla("select * from producto where id_producto = " + i + ";"); // Tdb
                     if (rs.next()) {
-                        list_lista_productos.setSelectedIndex(j);
+                        list_lista_productos.setSelectedIndex(j); // Ta
                         producto_informacion();
                     }
-                    f = false;
-                    break;
-                } else if (i.equals(a_pt.get(j).getCod_producto())) {
-                    rs = pt.Consultar_Tabla("select * from producto where id_producto = " + a_pt.get(j).getId_producto() + ";");
+                    f = false; // Ta
+                    break; // Ta
+                } else if (i.equals(a_pt.get(j).getCod_producto())) { // Ta + Tc
+                    rs = pt.Consultar_Tabla("select * from producto where id_producto = " + a_pt.get(j).getId_producto() + ";"); // Ta
                     if (rs.next()) {
-                        list_lista_productos.setSelectedIndex(j);
+                        list_lista_productos.setSelectedIndex(j); // Ta
                         producto_informacion();
                     }
-                    f = false;
-                    break;
+                    f = false; // Ta
+                    break; // Ta
                 }
             }
+
             if (f) {
-                JOptionPane.showMessageDialog(null, "El producto no existe, asegúrese que el identificador sea correcto...");
+                JOptionPane.showMessageDialog(null, "El producto no existe, asegúrese que el identificador sea correcto..."); // Ta
             }
         } catch (Exception e) {
 
         }
+        //TME = Ta + To + Ta + Ta
+        //TPE = (a_pt.size()) * (Ta + Tc) + 2Ta
+        //TPR = ((Ta + To + Ta + Ta)+((a_pt.size()) * (Ta + Tc) + 2Ta))/2
     }
 
     public void producto_calcular() {
         try {
-            int fila = tbl_productos.getSelectedRow();
-            double sbt = Double.parseDouble(tbl_productos.getModel().getValueAt(fila, 2).toString());
-            double sbt2 = Double.parseDouble(tbl_productos.getModel().getValueAt(fila, 3).toString());
-            double total = sbt * sbt2;
-            tbl_productos.setValueAt(total, fila, 4);
+            int fila = tbl_productos.getSelectedRow(); // Ta
+
+            double sbt = Double.parseDouble(tbl_productos.getModel().getValueAt(fila, 2).toString()); // Ta + To
+            double sbt2 = Double.parseDouble(tbl_productos.getModel().getValueAt(fila, 3).toString()); // Ta + To
+            double total = sbt * sbt2; // Ta + To
+
+            tbl_productos.setValueAt(total, fila, 4); // Ta + To
         } catch (Exception e) {
             System.out.println(e.toString());
         }
+        //TME = 2 * Ta + 2 * To
+        //TPE = (2 * Ta + 2 * To)
+        //((2 * Ta + 2 * To)+((2 * Ta + 2 * To)))/2
     }
 
     public int ultima_fila() {
-        int fila = 0;
-        for (int i = 0; i < tbl_productos.getRowCount(); i++) {
-            if (tbl_productos.getValueAt(i, 0) == null) {
-                fila = i;
-                break;
+        int fila = 0; // Ta
+
+        for (int i = 0; i < tbl_productos.getRowCount(); i++) { // (n-1)*tc + tc = ntc
+            if (tbl_productos.getValueAt(i, 0) == null) { // Ta + Tc
+                fila = i; // Ta
+                break; // Ta
             }
-            fila = -1;
+            fila = -1; // Ta
         }
         return fila;
+        //TME = 2 * Ta
+        //TPE = (2 * Ta) + n * (2 * Ta + Tc)
+        //TPR = ((2 * Ta)+((2 * Ta) + n * (2 * Ta + Tc)))/2
     }
 
     public void producto_enviar() {
         try {
-            if (ultima_fila() == -1) {
-                DefaultTableModel modelo = (DefaultTableModel) tbl_productos.getModel();
-                Object[] rowData = {null, null, null, null, null};
-                modelo.addRow(rowData);
-
+            if (ultima_fila() == -1) { // Ta + To
+                DefaultTableModel modelo = (DefaultTableModel) tbl_productos.getModel(); // Ta
+                Object[] rowData = {null, null, null, null, null}; // Ta
+                modelo.addRow(rowData); // Ta
             }
-            Producto_Beans pt = new Producto_Beans();
-            int i = list_lista_productos.getSelectedIndex();
-            ResultSet rs = pt.Consultar_Tabla("select * from producto where id_producto = " + a_pt.get(i).getId_producto() + ";");
-            int fila = ultima_fila();
-            if (rs.next()) {
-                tbl_productos.setValueAt(rs.getString("id_producto"), fila, 0);
-                tbl_productos.setValueAt(rs.getString("nombre") + " - " + rs.getString("descripcion"), fila, 1);
-                tbl_productos.setValueAt(1, fila, 2);
-                tbl_productos.setValueAt(Double.parseDouble(rs.getString("pvp")), fila, 3);
-                double sbt = Double.parseDouble(tbl_productos.getModel().getValueAt(fila, 2).toString());
-                double sbt2 = Double.parseDouble(tbl_productos.getModel().getValueAt(fila, 3).toString());
-                double total = sbt * sbt2;
-                tbl_productos.setValueAt(total, fila, 4);
+
+            Producto_Beans pt = new Producto_Beans(); // Ta
+            int i = list_lista_productos.getSelectedIndex(); // Ta
+            ResultSet rs = pt.Consultar_Tabla("select * from producto where id_producto = " + a_pt.get(i).getId_producto() + ";"); // Ta + To
+            int fila = ultima_fila(); // Ta
+
+            if (rs.next()) { // (n-1)*tc + tc = ntc
+                tbl_productos.setValueAt(rs.getString("id_producto"), fila, 0); // Ta
+                tbl_productos.setValueAt(rs.getString("nombre") + " - " + rs.getString("descripcion"), fila, 1); // Ta
+                tbl_productos.setValueAt(1, fila, 2); // Ta
+                tbl_productos.setValueAt(Double.parseDouble(rs.getString("pvp")), fila, 3); // Ta
+                double sbt = Double.parseDouble(tbl_productos.getModel().getValueAt(fila, 2).toString()); // Ta + To
+                double sbt2 = Double.parseDouble(tbl_productos.getModel().getValueAt(fila, 3).toString()); // Ta + To
+                double total = sbt * sbt2; // Ta + To
+                tbl_productos.setValueAt(total, fila, 4); // Ta
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         }
+        //TME = 6 * Ta + 2 * To
+        //TPE = (6 * Ta + 2 * To) + n * (6 * Ta + 2 * To)
+        //TPR = ((6 * Ta + 2 * To)+((6 * Ta + 2 * To) + n * (6 * Ta + 2 * To)))/2
     }
 
     public void producto_subtotal() {
         try {
-            double total = 0;
-            for (int i = 0; i < tbl_productos.getRowCount(); i++) {
+            double total = 0; // Ta
+            for (int i = 0; i < tbl_productos.getRowCount(); i++) { // (n-1)*tc + tc = ntc
                 if (tbl_productos.getValueAt(i, 4) != null) {
-                    total = total + Double.parseDouble(tbl_productos.getValueAt(i, 4).toString());
+                    total = total + Double.parseDouble(tbl_productos.getValueAt(i, 4).toString()); // Ta + To
                 }
             }
-            txt_subtotal.setText("" + total);
-            if (!txt_descuento.getText().equals("")) {
-                total = Double.parseDouble(txt_subtotal.getText()) - ((Double.parseDouble(txt_subtotal.getText()) * Double.parseDouble(txt_descuento.getText())) / 100);
-                txt_descuento_valor.setText("" + total);
+            txt_subtotal.setText("" + total); // Ta + To
+
+            if (!txt_descuento.getText().equals("")) { // Ta
+                total = Double.parseDouble(txt_subtotal.getText()) - ((Double.parseDouble(txt_subtotal.getText()) * Double.parseDouble(txt_descuento.getText())) / 100); // Ta + To
+                txt_descuento_valor.setText("" + total); // Ta + To
             } else {
-                txt_descuento_valor.setText("");
+                txt_descuento_valor.setText(""); // Ta
             }
 
-            if (!txt_descuento.getText().equals("") && !txt_iva.getText().equals("")) {
-                total = Double.parseDouble(txt_descuento_valor.getText()) + ((Double.parseDouble(txt_descuento_valor.getText()) * Double.parseDouble(txt_iva.getText())) / 100);
-                txt_iva_valor.setText("" + total);
-            } else if (txt_descuento.getText().equals("") && !txt_iva.getText().equals("")) {
-                total = Double.parseDouble(txt_subtotal.getText()) + ((Double.parseDouble(txt_subtotal.getText()) * Double.parseDouble(txt_iva.getText())) / 100);
-                txt_iva_valor.setText("" + total);
+            if (!txt_descuento.getText().equals("") && !txt_iva.getText().equals("")) { // Ta
+                total = Double.parseDouble(txt_descuento_valor.getText()) + ((Double.parseDouble(txt_descuento_valor.getText()) * Double.parseDouble(txt_iva.getText())) / 100); // Ta + To
+                txt_iva_valor.setText("" + total); // Ta + To
+            } else if (txt_descuento.getText().equals("") && !txt_iva.getText().equals("")) { // Ta
+                total = Double.parseDouble(txt_subtotal.getText()) + ((Double.parseDouble(txt_subtotal.getText()) * Double.parseDouble(txt_iva.getText())) / 100); // Ta + To
+                txt_iva_valor.setText("" + total); // Ta + To
             } else if (txt_iva.getText().equals("")) {
-                txt_iva_valor.setText("");
+                txt_iva_valor.setText(""); // Ta
             }
 
-            if (!txt_iva.getText().equals("")) {
-                txt_total_factura.setText(txt_iva_valor.getText());
-            } else if (!txt_descuento.getText().equals("") && txt_iva.getText().equals("")) {
-                txt_total_factura.setText(txt_descuento_valor.getText());
-            } else if (txt_descuento.getText().equals("") && txt_iva.getText().equals("")) {
-                txt_total_factura.setText(txt_subtotal.getText());
+            if (!txt_iva.getText().equals("")) { // Ta
+                txt_total_factura.setText(txt_iva_valor.getText()); // Ta
+            } else if (!txt_descuento.getText().equals("") && txt_iva.getText().equals("")) { // Ta
+                txt_total_factura.setText(txt_descuento_valor.getText()); // Ta
+            } else if (txt_descuento.getText().equals("") && txt_iva.getText().equals("")) { // Ta
+                txt_total_factura.setText(txt_subtotal.getText()); // Ta
             }
         } catch (Exception e) {
         }
+        //TME = 2 * Ta
+        //TPE = (2 * Ta) + (4 * To) + (5 * Tc) + (5 * Ta)
+        //TPR = ((2 * Ta)+((2 * Ta) + (4 * To) + (5 * Tc) + (5 * Ta)))/2
     }
 
     public void cobrador_combo() throws SQLException {
         try {
-            Empleado_Bens em = new Empleado_Bens();
-            ResultSet rs = em.Consultar_Tabla("select * from empleado;");
-            int x = 1;
-            while (rs.next()) {
-                cbx_cobrador.addItem(x + ". " + rs.getString("nombres") + " " + rs.getString("apellidos"));
-                a_em.add(new Empleado_Bens(parseInt(rs.getString("id_empleado")), rs.getString("nombres"), rs.getString("apellidos"), rs.getString("direccion"), rs.getString("telefono"), rs.getString("cargo")));
-                x++;
+            Empleado_Bens em = new Empleado_Bens(); // Ta
+            ResultSet rs = em.Consultar_Tabla("select * from empleado;"); // Ta + To
+            int x = 1; // Ta
+            while (rs.next()) { // (n-1)*tc + tc = ntc
+                cbx_cobrador.addItem(x + ". " + rs.getString("nombres") + " " + rs.getString("apellidos")); // Ta + To
+                a_em.add(new Empleado_Bens(parseInt(rs.getString("id_empleado")), rs.getString("nombres"), rs.getString("apellidos"), rs.getString("direccion"), rs.getString("telefono"), rs.getString("cargo"))); // Ta + To
+                x++; // Ta
             }
         } catch (Exception e) {
-
         }
+        //TME = 2 * Ta + To
+        //TPE = (2 * Ta + To) + n * (2 * Ta + To)
+        //TPR = ((2 * Ta + To)+((2 * Ta + To) + n * (2 * Ta + To)))/2
     }
 
     public void check_box_efectivo() {
         if (chb_efectivo.isSelected()) {
-            chb_dinero_electronico.setSelected(false);
-            chb_tarjeta.setSelected(false);
-            chb_otros.setSelected(false);
+            chb_dinero_electronico.setSelected(false); //ta
+            chb_tarjeta.setSelected(false); //ta
+            chb_otros.setSelected(false); //ta
         }
+        //TPR = 3ta
     }
 
     public void check_box_dinero_electronico() {
         if (chb_dinero_electronico.isSelected()) {
-            chb_tarjeta.setSelected(false);
-            chb_otros.setSelected(false);
-            chb_efectivo.setSelected(false);
+            chb_tarjeta.setSelected(false); //ta
+            chb_otros.setSelected(false); //ta
+            chb_efectivo.setSelected(false); //ta
         }
+        //TPR = 3ta
     }
 
     public void check_box_tarjeta() {
         if (chb_tarjeta.isSelected()) {
-            chb_otros.setSelected(false);
-            chb_efectivo.setSelected(false);
-            chb_dinero_electronico.setSelected(false);
+            chb_otros.setSelected(false); //ta
+            chb_efectivo.setSelected(false); //ta
+            chb_dinero_electronico.setSelected(false); //ta
         }
+        //TPR = 3ta
     }
 
     public void check_box_otros() {
         if (chb_otros.isSelected()) {
-            chb_efectivo.setSelected(false);
-            chb_dinero_electronico.setSelected(false);
-            chb_tarjeta.setSelected(false);
+            chb_efectivo.setSelected(false); // ta
+            chb_dinero_electronico.setSelected(false); // ta
+            chb_tarjeta.setSelected(false); // ta
         }
+        //TPR = 3ta
     }
 
     public void registrar_factura() {
         try {
-            Factura_Beans ft = new Factura_Beans();
-            int i = cbx_cliente.getSelectedIndex();
-            ft.setId_factura(parseInt(lbl_id_factura.getText()));
-            ft.setId_cliente(a_cl.get(i - 1).getId_cliente());
-            i = cbx_cobrador.getSelectedIndex();
-            ft.setId_empleado(a_em.get(i - 1).getId_empleado());
-            ft.setNumero(lbl_id_factura.getText());
-            ft.setFecha(lbl_fecha.getText());
-            ft.setSubtotal(Double.parseDouble(txt_subtotal.getText()));
-            ft.setEfectivo(Double.parseDouble(txt_efectivo.getText()));
-            ft.setCambio(Double.parseDouble(txt_cambio.getText()));
+            Factura_Beans ft = new Factura_Beans(); // Ta
+            int i = cbx_cliente.getSelectedIndex(); // Ta
+            ft.setId_factura(parseInt(lbl_id_factura.getText())); // Ta + To
+            ft.setId_cliente(a_cl.get(i - 1).getId_cliente()); // Ta + To
+            i = cbx_cobrador.getSelectedIndex(); // Ta
+            ft.setId_empleado(a_em.get(i - 1).getId_empleado()); // Ta + To
+            ft.setNumero(lbl_id_factura.getText()); // Ta
+            ft.setFecha(lbl_fecha.getText()); // Ta
+            ft.setSubtotal(Double.parseDouble(txt_subtotal.getText())); // Ta + To
+            ft.setEfectivo(Double.parseDouble(txt_efectivo.getText())); // Ta + To
+            ft.setCambio(Double.parseDouble(txt_cambio.getText())); // Ta + To
             if (txt_iva.getText().equals("")) {
-                ft.setIva(0);
+                ft.setIva(0); //¿? To
             } else {
-                ft.setIva(Double.parseDouble(txt_iva.getText()));
+                ft.setIva(Double.parseDouble(txt_iva.getText())); //¿? Ta + To
             }
             if (txt_descuento.getText().equals("")) {
-                ft.setDescuento(0);
+                ft.setDescuento(0); //¿? To
             } else {
-                ft.setDescuento(Double.parseDouble(txt_descuento.getText()));
+                ft.setDescuento(Double.parseDouble(txt_descuento.getText())); //¿? Ta + To
             }
-            ft.setTotal(Double.parseDouble(txt_total_factura.getText()));
-            ft.Insertar_Factura();
-            Detalle_Factura_Beans dft = new Detalle_Factura_Beans();
+            ft.setTotal(Double.parseDouble(txt_total_factura.getText())); // Ta + To
+            ft.Insertar_Factura(); // Ta + To
+
+            Detalle_Factura_Beans dft = new Detalle_Factura_Beans(); // Ta
             for (int j = 0; j < tbl_productos.getRowCount(); j++) {
                 if (tbl_productos.getValueAt(j, 0) == null) {
                     break;
                 }
-                dft.setId_detalle_factura(dft.Incremento_Detalle_factura());
-                dft.setId_factura(parseInt(lbl_id_factura.getText()));
-                dft.setId_producto(parseInt(tbl_productos.getValueAt(j, 0).toString()));
-                dft.setCantidad(parseInt(tbl_productos.getValueAt(j, 2).toString()));
-                dft.setPvp(Double.parseDouble(tbl_productos.getValueAt(j, 3).toString()));
-                dft.setSubtotal(Double.parseDouble(tbl_productos.getValueAt(j, 4).toString()));
+                // Ta
+                dft.setId_detalle_factura(dft.Incremento_Detalle_factura()); // Ta + To
+                dft.setId_factura(parseInt(lbl_id_factura.getText())); // Ta + To
+                dft.setId_producto(parseInt(tbl_productos.getValueAt(j, 0).toString())); // Ta + To
+                dft.setCantidad(parseInt(tbl_productos.getValueAt(j, 2).toString())); // Ta + To
+                dft.setPvp(Double.parseDouble(tbl_productos.getValueAt(j, 3).toString())); // Ta + To
+                dft.setSubtotal(Double.parseDouble(tbl_productos.getValueAt(j, 4).toString())); // Ta + To
                 if (chb_efectivo.isSelected()) {
-                    dft.setForma_pago("Efectivo");
+                    dft.setForma_pago("Efectivo"); //¿? Ta
                 } else if (chb_dinero_electronico.isSelected()) {
-                    dft.setForma_pago("Dinero Electronico");
+                    dft.setForma_pago("Dinero Electronico"); //¿? Ta
                 } else if (chb_tarjeta.isSelected()) {
-                    dft.setForma_pago("Tarjeta De Credito/Debito");
+                    dft.setForma_pago("Tarjeta De Credito/Debito"); //¿? Ta
                 } else {
-                    dft.setForma_pago("Otros");
+                    dft.setForma_pago("Otros"); //¿? Ta
                 }
-                dft.Insertar_Detalle_factura();
+                dft.Insertar_Detalle_factura(); // Ta + To
             }
-            Fecha_Actual();
-            id_factura();
-            cbx_cliente.setSelectedIndex(0);
-            cbx_cobrador.setSelectedIndex(0);
-            lbl_cedula.setText("");
-            lbl_telefono.setText("");
-            lbl_direccion.setText("");
-            chb_dinero_electronico.setSelected(false);
-            chb_efectivo.setSelected(false);
-            chb_tarjeta.setSelected(false);
-            chb_otros.setSelected(false);
-            txt_cambio.setText("");
-            txt_descuento.setText("");
-            txt_descuento_valor.setText("");
-            txt_efectivo.setText("");
-            txt_iva.setText("");
-            txt_iva_valor.setText("");
-            txt_subtotal.setText("");
-            txt_total_factura.setText("");
+
+            // Ta
+            Fecha_Actual(); // Ta
+            id_factura(); // Ta
+            cbx_cliente.setSelectedIndex(0); // Ta
+            cbx_cobrador.setSelectedIndex(0); // Ta
+            lbl_cedula.setText(""); // Ta
+            lbl_telefono.setText(""); // Ta
+            lbl_direccion.setText(""); // Ta
+            chb_dinero_electronico.setSelected(false); // Ta
+            chb_efectivo.setSelected(false); // Ta
+            chb_tarjeta.setSelected(false); // Ta
+            chb_otros.setSelected(false); // Ta
+            txt_cambio.setText(""); // Ta
+            txt_descuento.setText(""); // Ta
+            txt_descuento_valor.setText(""); // Ta
+            txt_efectivo.setText(""); // Ta
+            txt_iva.setText(""); // Ta
+            txt_iva_valor.setText(""); // Ta
+            txt_subtotal.setText(""); // Ta
+            txt_total_factura.setText(""); // Ta
             for (int j = 0; j < tbl_productos.getRowCount(); j++) {
-                tbl_productos.setValueAt(null, j, 0);
-                tbl_productos.setValueAt(null, j, 1);
-                tbl_productos.setValueAt(null, j, 2);
-                tbl_productos.setValueAt(null, j, 3);
-                tbl_productos.setValueAt(null, j, 4);
+                tbl_productos.setValueAt(null, j, 0); // Ta
+                tbl_productos.setValueAt(null, j, 1); // Ta
+                tbl_productos.setValueAt(null, j, 2); // Ta
+                tbl_productos.setValueAt(null, j, 3); // Ta
+                tbl_productos.setValueAt(null, j, 4); // Ta
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e.toString()); // Ta
         }
+        //TME = 18ta + 19to + tc
+        //TPE = 24Ta + 23To + Tc
+        //TPR = 21ta + 21to + tc
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
