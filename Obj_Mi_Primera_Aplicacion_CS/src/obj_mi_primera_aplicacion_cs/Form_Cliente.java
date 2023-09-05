@@ -388,18 +388,22 @@ public class Form_Cliente extends javax.swing.JFrame {
     private void Enviar() {
         try {
             Cliente_Beans cb = new Cliente_Beans();
-            cb.setId_cliente(Integer.parseInt(txt_id_cliente.getText()));
-            cb.setCedula(txt_cedula.getText());
-            cb.setNombres(txt_nombres.getText());
-            cb.setApellidos(txt_apellidos.getText());
-            cb.setDireccion(txt_direccion.getText());
-            cb.setTelefono(txt_telefono.getText());
-            cb.Insertar_Cliente();
+            cb.setId_cliente(Integer.parseInt(txt_id_cliente.getText()));         //ta
+            cb.setCedula(txt_cedula.getText());                                   //ta
+            cb.setNombres(txt_nombres.getText());                                 //ta
+            cb.setApellidos(txt_apellidos.getText());                             //ta  
+            cb.setDireccion(txt_direccion.getText());                             //ta
+            cb.setTelefono(txt_telefono.getText());                               //ta
+            cb.Insertar_Cliente();                                                
             this.Mostar(tbl_cliente, "select * from cliente;");
             JOptionPane.showMessageDialog(null, "La informacion ha sido registrada con exito...");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
+        //TME = 6ta
+        //TPE = 6ta
+        //TPR = (6ta + 6ta) / 2
+        //TPR = 6ta
     }
 
     private void Mostar(javax.swing.JTable jt, String sql) {
@@ -489,66 +493,78 @@ public class Form_Cliente extends javax.swing.JFrame {
 
     public void actualizar() {
         try {
-            Cliente_Beans cl = new Cliente_Beans();
-            if (boolea) {
-                String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere actualizar: ");
-                ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";");
-                if (rs.next()) {
-                    botones(false);
-                    Texto(rs);
+            Cliente_Beans cl = new Cliente_Beans();                                                                            //ta
+            if (boolea) {                                                                                                      //tc
+                String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere actualizar: ");    //¿? ta
+                ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";");                  //¿? ta
+                if (rs.next()) {                                                                                               //¿? tc
+                    botones(false);                                                                                            //¿? ta
+                    Texto(rs);                                                                                                 //¿? ta  
                     JOptionPane.showMessageDialog(null, "Modifique los datos que quiere actualizar...");
                     txt_mensaje.setText("Modifique los datos que quiere actualizar...");
-                    boolea = false;
-                    btn_cancelar.setEnabled(true);
+                    boolea = false;                                                                                            //¿? ta
+                    btn_cancelar.setEnabled(true);                                                                             //¿? ta
                 }
             } else {
-                cl.Actualizar_Cliente(Integer.parseInt(txt_id_cliente.getText()), txt_cedula.getText(), txt_nombres.getText(), txt_apellidos.getText(), txt_direccion.getText(), txt_telefono.getText());
-                botones(true);
-                Texto_2(cl);
-                boolea = true;
-                this.Mostar(tbl_cliente, "select * from cliente;");
-                btn_cancelar.setEnabled(false);
-            }
+                cl.Actualizar_Cliente(Integer.parseInt(txt_id_cliente.getText()), txt_cedula.getText(), txt_nombres.getText(), txt_apellidos.getText(), txt_direccion.getText(), txt_telefono.getText()); //¿? ta
+                botones(true);                                                                                                 //¿? ta
+                Texto_2(cl);                                                                                                   //¿? ta
+                boolea = true;                                                                                                 //¿? ta
+                this.Mostar(tbl_cliente, "select * from cliente;");                                                            //¿? ta 
+                btn_cancelar.setEnabled(false);                                                                                //¿? ta 
+            }                                                                                                                  
         } catch (Exception e) {
         }
+        //TME = ta + tc
+        //TPE = 13ta + 3tc
+        //TPR = ((ta + tc)+(13ta+ 2tc))/2
+        //TPR = 7ta + 2tc
     }
 
     public void cancelar() {
         try {
-            Cliente_Beans cl = new Cliente_Beans();
-            Texto_2(cl);
-            botones(true);
-            btn_actualizar.setEnabled(true);
-            btn_cancelar.setEnabled(false);
-            boolea = true;
+            Cliente_Beans cl = new Cliente_Beans();  // ta
+            Texto_2(cl);                             // ta 
+            botones(true);                           // ta
+            btn_actualizar.setEnabled(true);         // ta
+            btn_cancelar.setEnabled(false);          // ta  
+            boolea = true;                           // ta
         } catch (Exception ex) {
         }
+        //TME = 6ta
+        //TPE = 6ta
+        //TPR = (6ta + 6ta)/2
+        //TPR = 6ta
     }
 
     public void eliminar() {
         try {
-            Cliente_Beans cl = new Cliente_Beans();
-            if (boolea) {
-                String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere Eliminar: ");
-                ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";");
-                if (rs.next()) {
-                    botones_2(false);
-                    Texto(rs);
+            Cliente_Beans cl = new Cliente_Beans();                                                                        // ta
+            if (boolea) {                                                                                                  // tc
+                String texto = JOptionPane.showInputDialog("Ingrese el identificador del cliente que quiere Eliminar: ");  //¿? ta
+                ResultSet rs = cl.Consultar_Tabla("select * from cliente where id_cliente = " + texto + ";");              //¿? ta
+                if (rs.next()) {                                                                                           //¿? tc
+                    botones_2(false);                                                                                      //¿? ta
+                    Texto(rs);                                                                                             //¿? ta
                     JOptionPane.showMessageDialog(null, "Esta es el cliente que desea eliminar...");
-                    txt_mensaje.setText("Esta es el cliente que desea eliminar...");
-                    boolea = false;
-                    btn_cancelar.setEnabled(true);
+                    txt_mensaje.setText("Esta es el cliente que desea eliminar...");                                       //¿? ta
+                    boolea = false;                                                                                        //¿? ta  
+                    btn_cancelar.setEnabled(true);                                                                         //¿? ta
                 }
             } else {
-                cl.Eliminar_Cliente(Integer.parseInt(txt_id_cliente.getText()));
-                botones_2(true);
-                Texto_2(cl);
-                boolea = true;
+                cl.Eliminar_Cliente(Integer.parseInt(txt_id_cliente.getText()));                                           //¿? ta
+                botones_2(true);                                                                                           //¿? ta
+                Texto_2(cl);                                                                                               //¿? ta
+                boolea = true;                                                                                             //¿? ta
                 this.Mostar(tbl_cliente, "select * from cliente;");
-                btn_cancelar.setEnabled(false);
-            }
+                btn_cancelar.setEnabled(false);                                                                            //¿? ta
+            }                                                                                                              
         } catch (Exception ex) {
         }
+        //TME = ta + tc
+        //TPE = 13ta + 3tc
+        //TPR = ((ta + tc)+(13ta + 3tc))/2
+        //TPR = 7ta + 2tc
     }
 
 
