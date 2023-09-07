@@ -420,7 +420,6 @@ public class Form_Empleado extends javax.swing.JFrame {
         //TPE = 6ta
         //TPR = (6ta + 6ta) / 2
         //TPR = 6ta
-        //chinga tu madre
     }
 
     private void Mostar(javax.swing.JTable jt, String sql) {
