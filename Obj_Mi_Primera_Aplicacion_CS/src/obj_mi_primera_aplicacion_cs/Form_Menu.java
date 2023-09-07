@@ -259,10 +259,11 @@ public class Form_Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_productoActionPerformed
 
     private void setImagen_Icono(JLabel l, String ruta) {
-        ImageIcon imagen = new ImageIcon(ruta);
-        Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(l.getWidth(), l.getHeight(), Image.SCALE_DEFAULT));
-        l.setIcon(icono);
-        this.repaint();
+        ImageIcon imagen = new ImageIcon(ruta); //ta
+        Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(l.getWidth(), l.getHeight(), Image.SCALE_DEFAULT)); //ta
+        l.setIcon(icono); //ta
+        this.repaint(); 
+        //TPR = 3ta
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

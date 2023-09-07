@@ -346,170 +346,211 @@ public class Form_Producto extends javax.swing.JFrame {
 
     private void Nuevo() {
         try {
-            Producto_Beans cb = new Producto_Beans();
-            Texto_2(cb);
+            Producto_Beans cb = new Producto_Beans();     //ta
+            Texto_2(cb);                                  //ta
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
+        //TME = 2ta
+        //TPE = 2ta
+        //TPR = (2ta + 2ta) / 2
+        //TPR = 2ta
     }
 
     private void Enviar() {
         try {
-            Producto_Beans cb = new Producto_Beans();
-            cb.setId_producto(Integer.parseInt(txt_id_producto.getText()));
-            cb.setCod_producto(txt_cod_producto.getText());
-            cb.setNombre(txt_nombre.getText());
-            cb.setDescripcion(txt_descripcion.getText());
-            cb.setPrecio_costo(Double.parseDouble(txt_precio.getText()));
-            cb.setPvp(Double.parseDouble(txt_pvp.getText()));
-            cb.setStock_maximo(Integer.parseInt(txt_stock_maximo.getText()));
-            cb.setStock_minimo(Integer.parseInt(txt_stock_minimo.getText()));
-            cb.setFecha_elaboracion(txt_fecha_elaboracion.getText());
-            cb.setFecha_vencimiento(txt_fecha_vencimiento.getText());
-            cb.Insertar_Producto();
+            Producto_Beans cb = new Producto_Beans(); //ta
+            cb.setId_producto(Integer.parseInt(txt_id_producto.getText()));//ta
+            cb.setCod_producto(txt_cod_producto.getText()); //ta
+            cb.setNombre(txt_nombre.getText()); //ta
+            cb.setDescripcion(txt_descripcion.getText()); //ta
+            cb.setPrecio_costo(Double.parseDouble(txt_precio.getText())); //ta
+            cb.setPvp(Double.parseDouble(txt_pvp.getText())); //ta
+            cb.setStock_maximo(Integer.parseInt(txt_stock_maximo.getText())); //ta
+            cb.setStock_minimo(Integer.parseInt(txt_stock_minimo.getText())); //ta
+            cb.setFecha_elaboracion(txt_fecha_elaboracion.getText()); //ta
+            cb.setFecha_vencimiento(txt_fecha_vencimiento.getText()); //ta
+            cb.Insertar_Producto(); //ta
             this.Mostar(tbl_producto, "select * from producto;");
             JOptionPane.showMessageDialog(null, "La informacion ha sido registrada con exito...");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
+        
+          //TME = 12ta
+        //TPE = 12ta
+        //TPR = (12ta + 12ta) / 2
+        //TPR = 12ta
+    
     }
 
     private void Mostar(javax.swing.JTable jt, String sql) {
         try {
-            Producto_Beans cb = new Producto_Beans();
+            Producto_Beans cb = new Producto_Beans();              //ta
             ResultSet rs;
-            DefaultTableModel modelo = new DefaultTableModel();
-            jt.setModel(modelo);
-            rs = cb.Consultar_Tabla(sql);
+             DefaultTableModel modelo = new DefaultTableModel();   //ta
+            jt.setModel(modelo);                                  //ta
+            rs = cb.Consultar_Tabla(sql);                         //ta
             ResultSetMetaData rsmd;
-            rsmd = rs.getMetaData();
-            int cantcolumnas = rsmd.getColumnCount();
-            for (int i = 1; i <= cantcolumnas; i++) {
-                modelo.addColumn(rsmd.getColumnLabel(i));
+            rsmd = rs.getMetaData();                              //ta
+            int cantcolumnas = rsmd.getColumnCount();             //ta
+            for (int i = 1; i <= cantcolumnas; i++) {             //(cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc
+                modelo.addColumn(rsmd.getColumnLabel(i));         //¿?(cantcolumnas)(ta)
             }
-            while (rs.next()) {
-                Object[] columna = new Object[cantcolumnas];
-                for (int i = 0; i < cantcolumnas; i++) {
-                    columna[i] = rs.getObject(i + 1);
+            while (rs.next()) {                                   //(rs.next())tc + tc
+                Object[] columna = new Object[cantcolumnas];      //¿?(rs.next())(ta)
+                for (int i = 0; i < cantcolumnas; i++) {          //¿?(rs.next())((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc))
+                    columna[i] = rs.getObject(i + 1);             //¿?(rs.next())(ta+to)
                 }
-                modelo.addRow(columna);
+                modelo.addRow(columna);                           //¿?(rs.next())(ta)
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error " + e.toString());
         }
+        //TME = (cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())tc + 7ta + 2tc
+        //TPE = (cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc)) + 2((rs.next())(ta)) + (rs.next())(ta+to) + (rs.next())tc + 7ta + 2tc
+        //TPR = (((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())tc + 7ta + 2tc)+((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + (rs.next())((cantcolumnas)*tc + (cantcolumnas)*ta + (cantcolumnas)*to + ta + tc)) + 2((rs.next())(ta)) + (rs.next())(ta+to) + (rs.next())tc + 7ta + 2tc)) / 2
     }
 
     public void botones(boolean x) {
-        btn_factura.setEnabled(x);
-        btn_volver.setEnabled(x);
-        btn_eliminar.setEnabled(x);
-        btn_enviar.setEnabled(x);
-        btn_nuevo.setEnabled(x);
+       btn_factura.setEnabled(x);   // Ta
+        btn_volver.setEnabled(x);    // Ta
+        btn_eliminar.setEnabled(x);  // Ta
+        btn_enviar.setEnabled(x);    // Ta
+        btn_nuevo.setEnabled(x);     // Ta
+        //TME = Ta * 5
+        //TPE = Ta * 5
+        //TPR = (Ta * 5 + Ta * 5) / 2
+        //TPR = 5 * Ta
     }
 
     public void botones_2(boolean x) {
-        btn_factura.setEnabled(x);
-        btn_volver.setEnabled(x);
-        btn_actualizar.setEnabled(x);
-        btn_enviar.setEnabled(x);
-        btn_nuevo.setEnabled(x);
+        btn_factura.setEnabled(x);    // Ta
+        btn_volver.setEnabled(x);     // Ta
+        btn_actualizar.setEnabled(x); // Ta
+        btn_enviar.setEnabled(x);     // Ta
+        btn_nuevo.setEnabled(x);      // Ta
+        //TME = Ta * 5
+        //TPE = Ta * 5
+        //TPR = (Ta * 5 + Ta * 5) / 2
+        //TPR = 5 * Ta
     }
 
     public void Texto(ResultSet rs) {
         try {
-            txt_id_producto.setText(rs.getString("id_producto"));
-            txt_nombre.setText(rs.getString("nombre"));
-            txt_cod_producto.setText(rs.getString("cod_producto"));
-            txt_descripcion.setText(rs.getString("descripcion"));
-            txt_precio.setText(rs.getString("precio_costo"));
-            txt_pvp.setText(rs.getString("pvp"));
-            txt_stock_maximo.setText(rs.getString("stock_maximo"));
-            txt_stock_minimo.setText(rs.getString("stock_minimo"));
-            txt_fecha_elaboracion.setText(rs.getString("fecha_elaboracion"));
-            txt_fecha_vencimiento.setText(rs.getString("fecha_vencimiento"));
+            txt_id_producto.setText(rs.getString("id_producto"));//ta+to
+            txt_nombre.setText(rs.getString("nombre")); //ta+to
+            txt_cod_producto.setText(rs.getString("cod_producto")); //ta+to
+            txt_descripcion.setText(rs.getString("descripcion")); //ta+to
+            txt_precio.setText(rs.getString("precio_costo")); //taa+to
+            txt_pvp.setText(rs.getString("pvp")); //ta+to
+            txt_stock_maximo.setText(rs.getString("stock_maximo")); //ta+to
+            txt_stock_minimo.setText(rs.getString("stock_minimo")); //ta+to
+            txt_fecha_elaboracion.setText(rs.getString("fecha_elaboracion")); //ta+to
+            txt_fecha_vencimiento.setText(rs.getString("fecha_vencimiento")); //ta+to
+             //TME = (Ta + To) * 10
+            //TPE = (Ta + To) * 10
+            //TPR = (((Ta + To) * 10)+((Ta + To) * 10)) / 2
+            //TPR = (Ta + To) * 10
         } catch (Exception e) {
         }
     }
 
     public void Texto_2(Producto_Beans pd) {
         try {
-            txt_id_producto.setText("" + pd.Incremento_Producto());
-            txt_nombre.setText("");
-            txt_cod_producto.setText("");
-            txt_descripcion.setText("");
-            txt_precio.setText("");
-            txt_pvp.setText("");
-            txt_stock_maximo.setText("");
-            txt_stock_minimo.setText("");
-            txt_fecha_elaboracion.setText("");
-            txt_fecha_vencimiento.setText("");
-            txt_mensaje.setText("");
+            txt_id_producto.setText("" + pd.Incremento_Producto()); //ta+to
+            txt_nombre.setText("");  //ta
+            txt_cod_producto.setText(""); //ta
+            txt_descripcion.setText(""); //ta
+            txt_precio.setText(""); //ta
+            txt_pvp.setText(""); //ta
+            txt_stock_maximo.setText(""); //ta
+            txt_stock_minimo.setText(""); //ta
+            txt_fecha_elaboracion.setText(""); //ta
+            txt_fecha_vencimiento.setText(""); //ta
+            txt_mensaje.setText(""); //ta
+             //TME = 11Ta + To
+            //TPE = 11Ta + To
+            //TPR = ((11Ta + To)+(11Ta + To)) / 2
+            //TPR = 11Ta + To
         } catch (Exception e) {
         }
     }
 
     public void actualizar() {
         try {
-            Producto_Beans pd = new Producto_Beans();
-            if (boolea) {
-                String texto = JOptionPane.showInputDialog("Ingrese el identificador del producto que quiere actualizar: ");
-                ResultSet rs = pd.Consultar_Tabla("select * from producto where id_producto = " + texto + ";");
-                if (rs.next()) {
-                    botones(false);
-                    Texto(rs);
+            Producto_Beans pd = new Producto_Beans(); //ta
+            if (boolea) {                                                                                                      //tc
+                String texto = JOptionPane.showInputDialog("Ingrese el identificador del producto que quiere actualizar: ");    //¿? ta
+                ResultSet rs = pd.Consultar_Tabla("select * from producto where id_producto = " + texto + ";");                  //¿? ta
+                if (rs.next()) {                                                                                               //¿? tc
+                    botones(false);                                                                                            //¿? ta
+                    Texto(rs);                                                                                                 //¿? ta  
                     JOptionPane.showMessageDialog(null, "Modifique los datos que quiere actualizar...");
                     txt_mensaje.setText("Modifique los datos que quiere actualizar...");
-                    boolea = false;
-                    btn_cancelar.setEnabled(true);
+                    boolea = false;                                                                                            //¿? ta
+                    btn_cancelar.setEnabled(true);                                                                             //¿? ta
                 }
-            } else {
-                pd.Actualizar_Producto(Integer.parseInt(txt_id_producto.getText()), txt_cod_producto.getText(), txt_nombre.getText(), txt_descripcion.getText(), Double.parseDouble(txt_precio.getText()), Double.parseDouble(txt_pvp.getText()), Integer.parseInt(txt_stock_maximo.getText()), Integer.parseInt(txt_stock_minimo.getText()), txt_fecha_elaboracion.getText(), txt_fecha_vencimiento.getText());
-                botones(true);
-                Texto_2(pd);
-                boolea = true;
-                this.Mostar(tbl_producto, "select * from producto;");
-                btn_cancelar.setEnabled(false);
-            }
+                } else {
+                pd.Actualizar_Producto(Integer.parseInt(txt_id_producto.getText()), txt_cod_producto.getText(), txt_nombre.getText(), txt_descripcion.getText(), Double.parseDouble(txt_precio.getText()), Double.parseDouble(txt_pvp.getText()), Integer.parseInt(txt_stock_maximo.getText()), Integer.parseInt(txt_stock_minimo.getText()), txt_fecha_elaboracion.getText(), txt_fecha_vencimiento.getText()); //¿? ta
+                botones(true);                                                                                                 //¿? ta
+                Texto_2(pd);                                                                                                   //¿? ta
+                boolea = true;                                                                                                 //¿? ta
+                this.Mostar(tbl_producto, "select * from producto;");                                                            //¿? ta 
+                btn_cancelar.setEnabled(false);                                                                                //¿? ta 
+            }                                                                                                                  
         } catch (Exception e) {
         }
+        //TME = ta + tc
+        //TPE = 13ta + 3tc
+        //TPR = ((ta + tc)+(13ta+ 2tc))/2
+        //TPR = 7ta + 2tc
     }
 
     public void cancelar() {
         try {
-            Producto_Beans pd = new Producto_Beans();
-            Texto_2(pd);
-            btn_actualizar.setEnabled(true);
-            botones(true);
-            btn_cancelar.setEnabled(false);
-            boolea = true;
+            Producto_Beans pd = new Producto_Beans(); //ta
+            Texto_2(pd);                             // ta 
+            botones(true);                           // ta
+            btn_actualizar.setEnabled(true);         // ta
+            btn_cancelar.setEnabled(false);          // ta  
+            boolea = true;                           // ta
         } catch (Exception ex) {
         }
+        //TME = 6ta
+        //TPE = 6ta
+        //TPR = (6ta + 6ta)/2
+        //TPR = 6ta
     }
 
     public void eliminar() {
         try {
-            Producto_Beans pd = new Producto_Beans();
-            if (boolea) {
-                String texto = JOptionPane.showInputDialog("Ingrese el identificador del producto que quiere eliminar: ");
-                ResultSet rs = pd.Consultar_Tabla("select * from producto where id_producto = " + texto + ";");
-                if (rs.next()) {
-                    botones_2(false);
-                    Texto(rs);
-                    JOptionPane.showMessageDialog(null, "Esta es el producto que desea eliminar...");
-                    txt_mensaje.setText("Esta es el producto que desea eliminar...");
-                    boolea = false;
-                    btn_cancelar.setEnabled(true);
+            Producto_Beans pd = new Producto_Beans(); //ta
+             if (boolea) {                                                                                                  // tc
+                String texto = JOptionPane.showInputDialog("Ingrese el identificador del producto que quiere Eliminar: ");  //¿? ta
+                ResultSet rs = pd.Consultar_Tabla("select * from producto where id_cliente = " + texto + ";");              //¿? ta
+                if (rs.next()) {                                                                                           //¿? tc
+                    botones_2(false);                                                                                      //¿? ta
+                    Texto(rs);                                                                                             //¿? ta
+                    JOptionPane.showMessageDialog(null, "Este es el producto que desea eliminar...");
+                    txt_mensaje.setText("Este es el producto que desea eliminar...");                                       //¿? ta
+                    boolea = false;                                                                                        //¿? ta  
+                    btn_cancelar.setEnabled(true);                                                                         //¿? ta
                 }
-            } else {
-                pd.Eliminar_Producto(Integer.parseInt(txt_id_producto.getText()));
-                botones_2(true);
-                Texto_2(pd);
-                boolea = true;
+             } else {
+                pd.Eliminar_Producto(Integer.parseInt(txt_id_producto.getText()));                                           //¿? ta
+                botones_2(true);                                                                                           //¿? ta
+                Texto_2(pd);                                                                                               //¿? ta
+                boolea = true;                                                                                             //¿? ta
                 this.Mostar(tbl_producto, "select * from producto;");
-                btn_cancelar.setEnabled(false);
-            }
+                btn_cancelar.setEnabled(false);                                                                            //¿? ta
+            }                                                                                                              
         } catch (Exception ex) {
         }
+        //TME = ta + tc
+        //TPE = 13ta + 3tc
+        //TPR = ((ta + tc)+(13ta + 3tc))/2
+        //TPR = 7ta + 2tc
     }
     /**
      * @param args the command line arguments
